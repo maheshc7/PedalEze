@@ -1,7 +1,7 @@
 package com.smazee.product.pedaleze;
 
 import android.Manifest;
-import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -18,18 +18,20 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, LocationListener {
 
-    private GoogleMap mMap;
-    double lon1 = 0, lon2 = 0, lat1 = 0, lat2 = 0;
-    LocationManager locationManager;
+    protected GoogleMap mMap;
+    static double lon1 = 0, lon2 = 0, lat1 = 0, lat2 = 0;
+    //LocationManager locationManager;
     TextView distTxt;
-    boolean isTracking = false;
+    public static boolean isTracking = false, inBackground=false;
     Button goBtn;
-    float prevDist=0;
+    static float prevDist=0;
+    static Intent toService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        inBackground=false;
+        if(isTracking){
+            goBtn.setText("STOP!");
+        }
+        else{
+            goBtn.setText("START!");
+            distTxt.setText("0.0 km");
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        inBackground=true;
+    }
 
     /**
      * Manipulates the map once available.
@@ -72,20 +92,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
         mMap.setMyLocationEnabled(true);
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        /*locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         try {
             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 2000, 20, MapsActivity.this);
         }
         catch(Exception e){
             Log.d("MapActivity-->",e.getMessage());
-        }
+        }*/
 
 
     }
 
     @Override
     public void onLocationChanged(Location location) {
-        lat2 = location.getLatitude();
+
+        /*lat2 = location.getLatitude();
         lon2 = location.getLongitude();
         if(lat1==0 && lon1==0){
             lat1=lat2;
@@ -97,7 +118,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             if(dist[0]!=0 && dist[0]>prevDist)
                 distTxt.setText(String.format("%.2f", dist[0]/1000) + " km");
             prevDist=dist[0];
-        }
+        }*/
+
 
     }
 
@@ -120,17 +142,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if (!isTracking) {
             isTracking = true;
             goBtn.setText("STOP!");
-            //getLocation();
-            LatLng latLng=new LatLng(lat1,lon1);
-            mMap.addMarker(new MarkerOptions().position(latLng).title("Start Point"));
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+            LocationUpdateService locationUpdateService = new LocationUpdateService(this);
+            toService = new Intent(MapsActivity.this,LocationUpdateService.class);
+            startService(toService);
         }
         else{
             isTracking = false;
+            stopService(toService);
             goBtn.setText("START!");
             distTxt.setText("0.0 km");
             mMap.clear();
         }
-
     }
 }

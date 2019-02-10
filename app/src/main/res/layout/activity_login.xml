@@ -44,6 +44,7 @@
         android:ems="10"
         android:hint="Phone Number"
         android:inputType="phone"
+        android:text="+91"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
