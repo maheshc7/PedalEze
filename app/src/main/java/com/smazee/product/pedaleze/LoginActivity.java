@@ -2,6 +2,7 @@ package com.smazee.product.pedaleze;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -33,6 +34,7 @@ public class LoginActivity extends AppCompatActivity {
     private PhoneAuthProvider.ForceResendingToken mResendToken;
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
     private FirebaseAuth mAuth;
+    ConstraintLayout otpLayout;
 
     String TAG="LoginActivity--->";
     EditText otpTxt,phoneTxt;
@@ -43,6 +45,8 @@ public class LoginActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         setContentView(R.layout.activity_login);
 
+        otpLayout = findViewById(R.id.login_otp);
+        otpLayout.setVisibility(View.INVISIBLE);
         otpTxt = findViewById(R.id.otpText);
         phoneTxt = findViewById(R.id.phoneText);
 
@@ -145,8 +149,8 @@ public class LoginActivity extends AppCompatActivity {
                             // [START_EXCLUDE]
                             //updateUI(STATE_SIGNIN_SUCCESS, user);
                             prefManager.setFirstTimeLogin(false);
-                            Intent toMap = new Intent(LoginActivity.this,MapsActivity.class);
-                            startActivity(toMap);
+                            Intent toDetails = new Intent(LoginActivity.this,DetailsActivity.class);
+                            startActivity(toDetails);
 
                             // [END_EXCLUDE]
                         } else {
@@ -194,8 +198,9 @@ public class LoginActivity extends AppCompatActivity {
         if (!validatePhoneNumber()) {
             return;
         }
+        startPhoneNumberVerification("+91"+phoneTxt.getText().toString());
+        otpLayout.setVisibility(View.VISIBLE);
 
-        startPhoneNumberVerification(phoneTxt.getText().toString());
     }
 
 }

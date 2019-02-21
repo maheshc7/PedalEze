@@ -114,7 +114,7 @@ public class SplashActivity extends AppCompatActivity {
     private void launchHomeScreen() {
         prefManager.setFirstTimeLaunch(false);
         if(!prefManager.isFirstTimeLogin()){
-            startActivity(new Intent(SplashActivity.this,MapsActivity.class));
+            startActivity(new Intent(SplashActivity.this,ProfileActivity.class));
         }
         else {
             startActivity(new Intent(SplashActivity.this, LoginActivity.class));

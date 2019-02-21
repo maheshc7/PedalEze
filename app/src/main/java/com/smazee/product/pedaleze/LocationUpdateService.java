@@ -170,7 +170,7 @@ public class LocationUpdateService extends Service {
                         Log.d("Speed(dist)-->", String.valueOf(speed)+"/"+(location.getTime() - mLastLocation.getTime()));
                         speed = d/((location.getTime() - mLastLocation.getTime())/60000);
                     }
-                    mapsActivity.distTxt.append("\n Speed: " + speed*3.6 + "km/h");
+                    mapsActivity.distTxt.append(String.format("\nSpeed: %.2f km/h", speed*3.6));
                     mLastLocation = location;
                     lat1 = lat2;
                     lon1 = lon2;
