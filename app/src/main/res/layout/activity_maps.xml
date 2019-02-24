@@ -89,6 +89,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5sp"
+            android:buttonTint="@color/colorAccent"
             android:text="Manual Assist" />
 
         <RadioButton
@@ -96,6 +97,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5sp"
+            android:buttonTint="@color/colorAccent"
             android:text="Relaxed" />
 
         <RadioButton
@@ -103,6 +105,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5sp"
+            android:buttonTint="@color/colorAccent"
             android:text="Fitness" />
     </LinearLayout>
 
