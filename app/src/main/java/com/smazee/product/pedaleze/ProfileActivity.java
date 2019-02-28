@@ -13,7 +13,7 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        SlideToActView swipeBtn = findViewById(R.id.swipe_btn);
+        final SlideToActView swipeBtn = findViewById(R.id.swipe_btn);
         swipeBtn.setOnSlideCompleteListener(new SlideToActView.OnSlideCompleteListener() {
             @Override
             public void onSlideComplete(SlideToActView slideToActView) {

@@ -21,11 +21,7 @@
         <activity
             android:name=".SplashActivity"
             android:noHistory="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -55,7 +51,13 @@
             android:exported="true" />
 
         <activity android:name=".DetailsActivity" />
-        <activity android:name=".ProfileActivity"></activity>
+        <activity android:name=".ProfileActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

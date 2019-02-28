@@ -9,7 +9,7 @@
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="447dp"
+        android:layout_height="427dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/card_view"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -214,18 +214,19 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:outer_color="#0EE748"
+            app:slider_icon="@drawable/locked"
             app:text="Slide to unlock bike" />
 
     </android.support.constraint.ConstraintLayout>
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/profile_menu_btn"
         style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="="
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/menu"
         android:textColor="@android:color/white"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -237,10 +238,9 @@
         android:layout_height="58dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@mipmap/ic_launcher_round"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/profile"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
