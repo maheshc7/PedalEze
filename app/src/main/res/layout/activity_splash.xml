@@ -13,9 +13,12 @@
         android:layout_height="match_parent" />
 
     <LinearLayout
+        android:paddingLeft="50dp"
+
         android:id="@+id/layoutDots"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dots_height"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="@dimen/dots_margin_bottom"
         android:gravity="center"
@@ -28,24 +31,33 @@
         android:layout_above="@id/layoutDots"
         android:background="@android:color/white" />
 
-    <Button
+    <ImageButton
         android:id="@+id/btn_next"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="88dp"
+        android:background="@drawable/arrow"
+        android:layout_height="88dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:background="@null"
-        android:text="@string/next"
-        android:textColor="@android:color/white" />
 
-    <Button
-        android:id="@+id/btn_skip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:background="@null"
-        android:text="@string/skip"
         android:textColor="@android:color/white" />
+<Button
+    android:id="@+id/btn_pedal"
+    android:layout_width="175dp"
+    android:layout_height="50dp"
+
+    android:layout_alignParentBottom="true"
+    android:layout_alignParentRight="true"
+    android:textColor="#fff"
+    android:background="@drawable/gradient"
+    android:text="LET'S PEDALEZE"/>
+    <!--<Button-->
+        <!--android:id="@+id/btn_skip"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_alignParentLeft="true"-->
+        <!--android:background="@null"-->
+        <!--android:text="@string/skip"-->
+        <!--android:textColor="@android:color/white" />-->
 
 </RelativeLayout>

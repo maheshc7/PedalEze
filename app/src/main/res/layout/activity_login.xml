@@ -11,7 +11,7 @@
     <android.support.constraint.ConstraintLayout
         android:id="@+id/login_main"
         android:layout_width="match_parent"
-        android:layout_height="420dp"
+        android:layout_height="500dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/card_view"
         android:orientation="vertical"
@@ -47,7 +47,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="80dp"
             android:ems="10"
-            android:hint="enter your phone number"
+            android:hint="Enter your phone number"
             android:inputType="phone"
             android:textColorLink="#51DF54"
             app:layout_constraintEnd_toEndOf="parent"

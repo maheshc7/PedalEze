@@ -15,6 +15,8 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -25,7 +27,8 @@ public class SplashActivity extends AppCompatActivity {
     private LinearLayout dotsLayout;
     private TextView[] dots;
     private int[] layouts;
-    private Button btnSkip, btnNext;
+    private Button btnSkip , btn_pedal;
+    private ImageButton btnNext;
     private PrefManager prefManager;
 
     @Override
@@ -46,14 +49,15 @@ public class SplashActivity extends AppCompatActivity {
 
         viewPager = findViewById(R.id.view_pager);
         dotsLayout = findViewById(R.id.layoutDots);
-        btnSkip = findViewById(R.id.btn_skip);
+//        btnSkip = findViewById(R.id.btn_skip);
         btnNext = findViewById(R.id.btn_next);
+        btn_pedal = findViewById(R.id.btn_pedal);
+        btn_pedal.setVisibility(View.INVISIBLE);
         // layouts of all welcome sliders
         layouts = new int[]{
                 R.layout.splash_slide1,
                 R.layout.splash_slide2,
-                R.layout.splash_slide3,
-                R.layout.splash_slide4};
+                R.layout.splash_slide3};
 
         // adding bottom dots
         addBottomDots(0);
@@ -132,12 +136,14 @@ public class SplashActivity extends AppCompatActivity {
             // changing the next button text 'NEXT' / 'GOT IT'
             if (position == layouts.length - 1) {
                 // last page. make button text to GOT IT
-                btnNext.setText(getString(R.string.start));
-                btnSkip.setVisibility(View.GONE);
+//                btn_pedal.setText(getString(R.string.start));
+                btnNext.setVisibility(View.GONE);
+                btn_pedal.setVisibility(View.VISIBLE);
+//                btnSkip.setVisibility(View.GONE);
             } else {
                 // still pages are left
-                btnNext.setText(getString(R.string.next));
-                btnSkip.setVisibility(View.VISIBLE);
+//                btnNext.setText(getString(R.string.next));
+//                btnSkip.setVisibility(View.VISIBLE);
             }
         }
 
