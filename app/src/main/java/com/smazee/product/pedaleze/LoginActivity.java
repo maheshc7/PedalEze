@@ -23,10 +23,13 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.msg91.sendotp.library.SendOtpVerification;
+import com.msg91.sendotp.library.Verification;
+import com.msg91.sendotp.library.VerificationListener;
 
 import java.util.concurrent.TimeUnit;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements VerificationListener {
 
     private PrefManager prefManager;
     private boolean mVerificationInProgress = false;
@@ -35,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
     private FirebaseAuth mAuth;
     ConstraintLayout otpLayout;
-
+    Verification mVerification;
     String TAG="LoginActivity--->";
     EditText otpTxt,phoneTxt;
 
@@ -190,17 +193,58 @@ public class LoginActivity extends AppCompatActivity {
             otpTxt.setError("Cannot be empty.");
             return;
         }
-
-        verifyPhoneNumberWithCode(mVerificationId, code);
+if(mVerification != null){
+    mVerification.verify(code);
+//    prefManager.setFirstTimeLogin(false);
+//    Intent toDetails = new Intent(LoginActivity.this,DetailsActivity.class);
+//    startActivity(toDetails);
+}
+//        verifyPhoneNumberWithCode(mVerificationId, code); Old Code Firebase
     }
 
     public void verifyNumber(View view){
         if (!validatePhoneNumber()) {
             return;
         }
-        startPhoneNumberVerification("+91"+phoneTxt.getText().toString());
+//        startPhoneNumberVerification("+91"+phoneTxt.getText().toString()); Old Colde Firebase
+
+        String phoneNumber = phoneTxt.getText().toString();
+        mVerification = SendOtpVerification.createSmsVerification
+                (SendOtpVerification
+                        .config("91" + phoneNumber)
+                        .context(this)
+                        .senderId("PEDEZE")
+                        .autoVerification(true)
+                        .build(), this);
+        mVerification.initiate();
         otpLayout.setVisibility(View.VISIBLE);
 
     }
 
+    @Override
+    public void onInitiated(String response) {
+        Log.d(TAG, "Initialized!" + response);
+        //OTP successfully resent/sent.
+    }
+
+    @Override
+    public void onInitiationFailed(Exception paramException) {
+        Log.e(TAG, "Verification initialization failed: " + paramException.getMessage());
+        //sending otp failed.
+    }
+
+    @Override
+    public void onVerified(String response) {
+        Log.d(TAG, "Verified!\n" + response);
+        //OTP verified successfully.
+        prefManager.setFirstTimeLogin(false);
+        Intent toDetails = new Intent(LoginActivity.this,DetailsActivity.class);
+        startActivity(toDetails);
+    }
+
+    @Override
+    public void onVerificationFailed(Exception paramException) {
+        Log.e(TAG, "Verification failed: " + paramException.getMessage());
+        //OTP  verification failed.
+    }
 }

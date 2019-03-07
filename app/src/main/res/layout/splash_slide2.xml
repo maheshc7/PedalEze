@@ -5,14 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/on_boarding_bg"
-    tools:context=".sample_activity">
+    >
 
 
     <ImageView
         android:layout_width="250dp"
         android:layout_height="200dp"
         android:layout_marginTop="8dp"
-        android:src="@drawable/Splashscreen2"
+        android:src="@drawable/splashscreen2"
         app:layout_constraintBottom_toTopOf="@+id/card_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -49,10 +49,10 @@
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent">
 
-            <ImageView
-                android:layout_width="88dp"
-                android:background="@drawable/arrow"
-                android:layout_height="88dp" />
+            <!--<ImageView-->
+                <!--android:layout_width="88dp"-->
+                <!--android:background="@drawable/arrow"-->
+                <!--android:layout_height="88dp" />-->
 
         </LinearLayout>
     </LinearLayout>

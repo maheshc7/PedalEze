@@ -69,13 +69,19 @@ public class SplashActivity extends AppCompatActivity {
         viewPager.setAdapter(myViewPagerAdapter);
         viewPager.addOnPageChangeListener(viewPagerPageChangeListener);
 
-        btnSkip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                launchHomeScreen();
-            }
-        });
+//        btnSkip.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                launchHomeScreen();
+//            }
+//        });
+btn_pedal.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
 
+        launchHomeScreen();
+    }
+});
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

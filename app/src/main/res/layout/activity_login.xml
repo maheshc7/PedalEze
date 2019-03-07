@@ -8,29 +8,69 @@
     android:background="@drawable/login_bg"
     tools:context=".LoginActivity">
 
+    <LinearLayout
+        android:id="@+id/intro_text"
+        android:layout_width="wrap_content"
+        android:layout_height="127dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginRight="44dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="right"
+
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/login_otp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Welcome to"
+            android:textAlignment="viewEnd"
+            android:textColor="#fff"
+            android:textSize="24sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Pedaleze"
+            android:textAlignment="viewEnd"
+            android:textColor="#fff"
+            android:textSize="44sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Feel the Legacy in Cycling"
+            android:textAlignment="viewEnd"
+            android:textColor="#fff"
+            android:textSize="18sp" />
+    </LinearLayout>
+
     <android.support.constraint.ConstraintLayout
         android:id="@+id/login_main"
         android:layout_width="match_parent"
-        android:layout_height="500dp"
+        android:layout_height="0dp"
         android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+
         android:background="@drawable/card_view"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintTop_toBottomOf="@+id/intro_text">
 
         <Button
             android:id="@+id/getBtn"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
             android:background="@drawable/gradient"
+            android:drawableRight="@drawable/arrow_white"
             android:onClick="verifyNumber"
+            android:paddingRight="20dp"
             android:text="Sign Up"
             android:textColor="@android:color/white"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -39,42 +79,73 @@
             app:layout_constraintTop_toBottomOf="@+id/emailText"
             app:layout_constraintVertical_bias="0.766" />
 
-        <EditText
-            android:id="@+id/phoneText"
-            android:layout_width="270dp"
+        <LinearLayout
+            android:id="@+id/phone_linear"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="80dp"
-            android:ems="10"
-            android:hint="Enter your phone number"
-            android:inputType="phone"
-            android:textColorLink="#51DF54"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="100dp"
+            android:layout_marginRight="40dp"
+            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:fontFamily="@font/roboto"
+                android:text="+91"
+                android:textColor="@color/colorPrimary"
+                android:textColorLink="@color/colorPrimary" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="|"
+                android:textColor="@color/colorPrimary"
+
+                android:textSize="30sp" />
+
+            <EditText
+                android:id="@+id/phoneText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+
+                android:fontFamily="@font/roboto"
+                android:hint="Enter your phone number"
+                android:inputType="phone"
+                android:textColorLink="#51DF54" />
+        </LinearLayout>
+
 
         <EditText
+
             android:id="@+id/emailText"
-            android:layout_width="270dp"
+            android:layout_width="330dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="40dp"
             android:layout_marginTop="36dp"
+            android:layout_marginEnd="40dp"
             android:ems="10"
-            android:hint="enter your mail ID"
+            android:visibility="invisible"
+            android:fontFamily="@font/roboto"
+            android:hint="Enter your mail ID"
             android:inputType="textEmailAddress"
             android:textColorLink="#51DF54"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/phoneText" />
+            app:layout_constraintTop_toBottomOf="@+id/phone_linear" />
 
     </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/login_otp"
         android:layout_width="match_parent"
-        android:layout_height="401dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:background="@drawable/card_view"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -87,13 +158,16 @@
             android:id="@+id/verifyBtn"
             android:layout_width="172dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="48dp"
-            android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="48dp"
             android:background="@drawable/gradient"
+            android:drawableRight="@drawable/arrow_white"
             android:onClick="checkOtp"
+            android:paddingRight="20dp"
             android:text="Verify"
+
             android:textColor="@android:color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -105,9 +179,9 @@
             android:id="@+id/otpText"
             android:layout_width="237dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
             android:ems="10"
             android:hint="OTP Code"
             android:inputType="number"
@@ -121,11 +195,11 @@
             android:id="@+id/otp1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="84dp"
+            android:layout_marginEnd="8dp"
             android:text="Enter OTP"
-            android:textSize="24sp"
+            android:textSize="22sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -135,9 +209,9 @@
             style="@android:style/Widget.Holo.Light.Button.Borderless.Small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="24dp"
+            android:layout_marginEnd="8dp"
             android:text="Resend OTP"
             android:textColor="#403B3B"
             app:layout_constraintEnd_toEndOf="parent"
