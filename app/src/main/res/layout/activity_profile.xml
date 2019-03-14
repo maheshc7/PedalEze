@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient"
+    android:background="@drawable/on_boarding_bg"
     tools:context=".ProfileActivity">
 
     <android.support.constraint.ConstraintLayout
@@ -231,6 +231,7 @@
         android:background="@drawable/menu"
         android:textColor="@android:color/white"
         android:textSize="24sp"
+
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -254,10 +255,22 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/roboto_medium"
-        android:text="Adobe Doe"
+        android:text="Santosh "
         android:textColor="@android:color/white"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
+    <Button
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:id="@+id/battery"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        android:text="Battery"/>
+    <Button
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:id="@+id/heart"
+        app:layout_constraintTop_toBottomOf="@+id/battery"
+        android:text="Heart"/>
 </android.support.constraint.ConstraintLayout>
