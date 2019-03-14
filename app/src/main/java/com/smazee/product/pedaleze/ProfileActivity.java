@@ -35,6 +35,7 @@ import com.smazee.product.pedaleze.model.MessageSender;
 import com.smazee.product.pedaleze.model.ProfileDetails;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Set;
 import java.util.UUID;
@@ -353,7 +354,7 @@ public void connect(){
             byte[] data = characteristic.getValue();
 //            txtByte.setText(Arrays.toString(data));
             Log.v("data_read",Arrays.toString(data));
-            heart_rate_text.setText(Arrays.toString(data));
+//            heart_rate_text.setText(Arrays.toString(data));
         }
 
         @Override
@@ -363,18 +364,28 @@ public void connect(){
             byte[] data = characteristic.getValue();
 //            txtByte.setText(Arrays.toString(data));
             Log.v("data_read",Arrays.toString(data));
-            heart_rate_text.setText(Arrays.toString(data));
+//            heart_rate_text.setText(Arrays.toString(data));
         }
 
         @Override
         public void onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
             super.onCharacteristicChanged(gatt, characteristic);
             Log.v("test", "onCharacteristicChanged");
-            byte[] data = characteristic.getValue();
+            final byte[] data = characteristic.getValue();
 //            txtByte.setText(Arrays.toString(data));
             Log.v("data_change",Arrays.toString(data));
-            heart_rate_text.setText(Arrays.toString(data));
-        }
+         runOnUiThread(new Runnable() {
+             @Override
+             public void run() {
+               String  arr;
+               arr = Arrays.toString(data);
+                 heart_rate_text.setText(arr);
+                 Toast.makeText(getApplicationContext(), Arrays.toString(data), Toast.LENGTH_LONG).show();
+             }
+         });
+
+
+                  }
 
         @Override
         public void onDescriptorRead(BluetoothGatt gatt, BluetoothGattDescriptor descriptor, int status) {
@@ -383,7 +394,7 @@ public void connect(){
             byte[] data = descriptor.getValue();
 //            txtByte.setText(Arrays.toString(data));
             Log.v("data_read",Arrays.toString(data));
-            heart_rate_text.setText(Arrays.toString(data));
+//            heart_rate_text.setText(Arrays.toString(data));
         }
 
         @Override
@@ -393,7 +404,7 @@ public void connect(){
             byte[] data = descriptor.getValue();
 //            txtByte.setText(Arrays.toString(data));
             Log.v("data_read",Arrays.toString(data));
-            heart_rate_text.setText(Arrays.toString(data));
+//            heart_rate_text.setText(Arrays.toString(data));
         }
 
         @Override
