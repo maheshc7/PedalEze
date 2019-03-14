@@ -238,6 +238,7 @@ if(mVerification != null){
         Log.d(TAG, "Verified!\n" + response);
         //OTP verified successfully.
         prefManager.setFirstTimeLogin(false);
+        prefManager.setPhoneNumber(phoneTxt.getText().toString());
         Intent toDetails = new Intent(LoginActivity.this,DetailsActivity.class);
         startActivity(toDetails);
     }

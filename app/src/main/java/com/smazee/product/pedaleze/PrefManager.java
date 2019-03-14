@@ -16,6 +16,7 @@ public class PrefManager {
 
     private static final String IS_FIRST_TIME_LAUNCH = "IsFirstTimeLaunch";
     private static final String IS_FIRST_TIME_LOGIN = "IsFirstTimeLogin";
+    private static final String PHONE_NUMBER = "PhoneNumber";
 
     public PrefManager(Context context) {
         this._context = context;
@@ -38,6 +39,15 @@ public class PrefManager {
     }
 
     public boolean isFirstTimeLogin() {
+
         return pref.getBoolean(IS_FIRST_TIME_LOGIN, true);
+    }
+    public void setPhoneNumber(String phoneNumber) {
+        editor.putString(PHONE_NUMBER, phoneNumber);
+        editor.commit();
+    }
+
+    public String getPhoneNumber() {
+        return pref.getString(PHONE_NUMBER, "1236547890");
     }
 }

@@ -19,14 +19,20 @@ import android.os.ParcelUuid;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.betomaluje.miband.ActionCallback;
 import com.betomaluje.miband.MiBand;
 import com.betomaluje.miband.model.BatteryInfo;
 import com.ncorti.slidetoact.SlideToActView;
+import com.smazee.product.pedaleze.model.MessageSender;
+import com.smazee.product.pedaleze.model.ProfileDetails;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -50,10 +56,13 @@ public class ProfileActivity extends AppCompatActivity {
     BluetoothGatt bluetoothGatt;
     BluetoothDevice bluetoothDevice;
     String serviceUUID;
+    PrefManager prefManager;
     private static final long SCAN_PERIOD = 10000;
-
+    TextView bmi_txt,height_txt,weight_txt,bmi_index,heart_rate_text;
 //    private static final UUID UUID_Service = UUID.fromString("19fc95c0c11111e399040002a5d5c51b");
 //    private static final UUID UUID_characteristic = UUID.fromString("21fac9e0c11111e392460002a5d5c51b");
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,8 +70,28 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
         mhandler = new Handler();
 connect_buton = (Button)findViewById(R.id.profile_menu_btn);
-bat_but = (Button)findViewById(R.id.battery);
-heart_but = (Button)findViewById(R.id.heart);
+//bat_but = (Button)findViewById(R.id.battery);
+//heart_but = (Button)findViewById(R.id.heart);
+        bmi_txt = findViewById(R.id.profile_bmi);
+        bmi_index = findViewById(R.id.profile_bmi2);
+        height_txt = findViewById(R.id.profile_height);
+        weight_txt = findViewById(R.id.profile_weight);
+        heart_rate_text = findViewById(R.id.heart_rate_dynamic);
+
+        prefManager = new PrefManager(this);
+//        MessageSender messageSender = new MessageSender(ProfileActivity.this);
+//        messageSender.getLogin(ProfileActivity.this,prefManager.getPhoneNumber(),"test");
+        final SlideToActView swipeBtn = findViewById(R.id.swipe_btn);
+        swipeBtn.setOnSlideCompleteListener(new SlideToActView.OnSlideCompleteListener() {
+            @Override
+            public void onSlideComplete(SlideToActView slideToActView) {
+
+                Intent toMap = new Intent(ProfileActivity.this,MapsActivity.class);
+                startActivity(toMap);
+
+            }
+        });
+
 
         if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
             Log.d("Suppport", "Yes");
@@ -94,23 +123,34 @@ heart_but = (Button)findViewById(R.id.heart);
                 connect();
             }
         });
-        bat_but.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getBatteryStatus();
-            }
-        });
-        heart_but.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startScanHeartRate();
-                listenHeartRate();
-            }
-        });
+//        bat_but.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                getBatteryStatus();
+//            }
+//        });
+//        heart_but.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//            }
+//        });
 
     }
 
+    public void updateView(ProfileDetails prof){
+        height_txt.setText(prof.getHeigh());
+        weight_txt.setText(prof.getWeight());
+        int bmi = (int)(Integer.parseInt(prof.getWeight())/(Math.pow(Double.parseDouble(prof.getHeigh())/100,2)));
+        bmi_txt.setText(Double.toString(bmi));
+        if(bmi<=18)
+            bmi_index.setText("Underweight");
+        else if(bmi>=25)
+            bmi_index.setText("Overweight");
+        else
+            bmi_index.setText("Normal");
 
+    }
     private void scanLeDevice(final boolean enable) {
         if (enable) {
             // Stops scanning after a pre-defined scan period.
@@ -157,6 +197,8 @@ heart_but = (Button)findViewById(R.id.heart);
 //        txtState.setText("Connected");
 //        Toast.makeText(this,"Connected",Toast.LENGTH_SHORT).show();
         Log.v("Status","Connected");
+        startScanHeartRate();
+        listenHeartRate();
     }
 
     void stateDisconnected() {
@@ -311,6 +353,7 @@ public void connect(){
             byte[] data = characteristic.getValue();
 //            txtByte.setText(Arrays.toString(data));
             Log.v("data_read",Arrays.toString(data));
+            heart_rate_text.setText(Arrays.toString(data));
         }
 
         @Override
@@ -320,6 +363,7 @@ public void connect(){
             byte[] data = characteristic.getValue();
 //            txtByte.setText(Arrays.toString(data));
             Log.v("data_read",Arrays.toString(data));
+            heart_rate_text.setText(Arrays.toString(data));
         }
 
         @Override
@@ -329,6 +373,7 @@ public void connect(){
             byte[] data = characteristic.getValue();
 //            txtByte.setText(Arrays.toString(data));
             Log.v("data_change",Arrays.toString(data));
+            heart_rate_text.setText(Arrays.toString(data));
         }
 
         @Override
@@ -338,6 +383,7 @@ public void connect(){
             byte[] data = descriptor.getValue();
 //            txtByte.setText(Arrays.toString(data));
             Log.v("data_read",Arrays.toString(data));
+            heart_rate_text.setText(Arrays.toString(data));
         }
 
         @Override
@@ -347,6 +393,7 @@ public void connect(){
             byte[] data = descriptor.getValue();
 //            txtByte.setText(Arrays.toString(data));
             Log.v("data_read",Arrays.toString(data));
+            heart_rate_text.setText(Arrays.toString(data));
         }
 
         @Override
@@ -368,4 +415,29 @@ public void connect(){
         }
 
     };
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_main, menu);
+       return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId())
+        {
+            case R.id.item1:
+                // Single menu item is selected do something
+                // Ex: launching new activity/screen or show alert message
+//                Toast.makeText(AndroidMenusActivity.this, "Bookmark is Selected", Toast.LENGTH_SHORT).show();
+               connect();
+                return true;
+
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 }

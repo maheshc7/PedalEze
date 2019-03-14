@@ -11,7 +11,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -27,6 +31,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     TextView distTxt;
     public static boolean isTracking = false, inBackground=false;
     Button goBtn;
+    RadioGroup radioGroup;
     static float prevDist=0;
     static Intent toService;
     Calendar startTime,stopTime;
@@ -41,6 +46,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
         distTxt = findViewById(R.id.distText);
         goBtn = findViewById(R.id.goBtn);
+        radioGroup = findViewById(R.id.mode_group);
 
     }
 
@@ -151,6 +157,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             goBtn.setText("START!");
             distTxt.setText("0.0 km");
             mMap.clear();
+        }
+    }
+
+    public void onSelection(View view){
+        int selectedId = radioGroup.getCheckedRadioButtonId();
+        RadioButton mode = findViewById(selectedId);
+        if(selectedId==-1){
+            Toast.makeText(MapsActivity.this,"Nothing selected", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            LinearLayout selection_layout = findViewById(R.id.selection_layout);
+            LinearLayout mode_layout = findViewById(R.id.mode_layout);
+            selection_layout.setVisibility(View.GONE);
+            mode_layout.setVisibility(View.GONE);
+            Toast.makeText(MapsActivity.this,mode.getText()+" Mode ON!", Toast.LENGTH_SHORT).show();
         }
     }
 }

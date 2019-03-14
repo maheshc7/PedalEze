@@ -25,6 +25,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="32dp"
+
             android:fontFamily="@font/roboto_bold"
             android:text="Your Record"
             android:textColor="@color/fg_text"
@@ -33,6 +34,119 @@
             app:layout_constraintHorizontal_bias="0.038"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView13" />
+
+        <LinearLayout
+            android:layout_width="100dp"
+            android:id="@+id/linear_bpm"
+            android:layout_height="100dp"
+            android:layout_marginTop="4dp"
+            android:orientation="vertical"
+            android:background="@drawable/profile_card_view"
+            android:elevation="5dp"
+            android:translationZ="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.102"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView3">
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="77"
+    android:typeface="sans"
+    android:textStyle="bold"
+android:id="@+id/heart_rate_dynamic"
+    android:textSize="34sp"
+    />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="bpm"
+                android:typeface="sans"
+                android:textStyle="bold"
+
+                android:textSize="11sp"
+                />
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+               android:layout_gravity="right"
+                android:src="@drawable/heart_rate_icon"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="4dp"
+            android:background="@drawable/profile_card_view"
+            android:elevation="5dp"
+            android:orientation="vertical"
+            android:translationZ="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.483"
+            app:layout_constraintStart_toStartOf="@+id/linear_bpm"
+            app:layout_constraintTop_toBottomOf="@+id/textView3">
+
+            <TextView
+                android:id="@+id/kilometer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="125"
+                android:textSize="34sp"
+                android:textStyle="bold"
+                android:typeface="sans" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="kms"
+                android:textSize="11sp"
+                android:textStyle="bold"
+
+                android:typeface="sans" />
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="right"
+                android:src="@drawable/distance_travelled_icon" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@drawable/profile_card_view"
+            android:elevation="5dp"
+            android:orientation="vertical"
+            android:translationZ="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.948"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView3">
+
+            <TextView
+                android:id="@+id/calories_burnt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="532"
+                android:textSize="34sp"
+                android:textStyle="bold"
+                android:typeface="sans" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="kcal"
+                android:textSize="11sp"
+                android:textStyle="bold"
+
+                android:typeface="sans" />
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="right"
+                android:src="@drawable/calories_burnt_icon" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/textView4"
@@ -120,7 +234,7 @@
             app:layout_constraintVertical_bias="0.505" />
 
         <TextView
-            android:id="@+id/textView8"
+            android:id="@+id/profile_bmi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
@@ -135,7 +249,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
         <TextView
-            android:id="@+id/textView9"
+            android:id="@+id/profile_height"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
@@ -150,7 +264,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
         <TextView
-            android:id="@+id/textView11"
+            android:id="@+id/profile_weight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
@@ -165,7 +279,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
         <TextView
-            android:id="@+id/textView12"
+            android:id="@+id/profile_bmi2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
@@ -175,7 +289,7 @@
             android:text="Normal"
             app:layout_constraintEnd_toStartOf="@+id/divider2"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView8" />
+            app:layout_constraintTop_toBottomOf="@+id/profile_bmi" />
 
         <TextView
             android:id="@+id/textView13"
@@ -188,7 +302,7 @@
             android:text="cms"
             app:layout_constraintEnd_toStartOf="@+id/divider"
             app:layout_constraintStart_toEndOf="@+id/divider2"
-            app:layout_constraintTop_toBottomOf="@+id/textView9" />
+            app:layout_constraintTop_toBottomOf="@+id/profile_bmi" />
 
         <TextView
             android:id="@+id/textView14"
@@ -201,7 +315,7 @@
             android:text="kg"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/divider"
-            app:layout_constraintTop_toBottomOf="@+id/textView11" />
+            app:layout_constraintTop_toBottomOf="@+id/profile_weight" />
 
         <com.ncorti.slidetoact.SlideToActView
             android:id="@+id/swipe_btn"
@@ -261,16 +375,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
-    <Button
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:id="@+id/battery"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
-        android:text="Battery"/>
-    <Button
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:id="@+id/heart"
-        app:layout_constraintTop_toBottomOf="@+id/battery"
-        android:text="Heart"/>
+    <!--<Button-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:id="@+id/battery"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/textView2"-->
+        <!--android:text="Battery"/>-->
+    <!--<Button-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:id="@+id/heart"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/battery"-->
+        <!--android:text="Heart"/>-->
 </android.support.constraint.ConstraintLayout>

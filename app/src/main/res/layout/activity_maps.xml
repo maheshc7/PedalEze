@@ -25,35 +25,29 @@
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="0dp"
-        android:layout_height="571dp"
-        android:layout_marginBottom="8dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="72dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:context=".MapsActivity" />
+        tools:context=".view.MapsActivity" />
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/constraintLayout"
             android:layout_width="0dp"
             android:layout_height="74dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:background="@color/dot_light_screen3"
+            android:background="@color/colorAccent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -63,9 +57,9 @@
                 android:id="@+id/distText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 android:fontFamily="sans-serif-smallcaps"
                 android:text="0.0 km"
                 android:textColor="@android:color/white"
@@ -79,10 +73,10 @@
             android:id="@+id/goBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="48dp"
-            android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:background="#94adc9"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="48dp"
+            android:background="@color/colorPrimaryDark"
             android:fontFamily="sans-serif-smallcaps"
             android:onClick="startTrack"
             android:text="START!"
@@ -93,56 +87,67 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <LinearLayout
+            android:id="@+id/mode_layout"
             android:layout_width="188dp"
             android:layout_height="154dp"
-            android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="36dp"
+            android:layout_marginEnd="8dp"
             android:background="@drawable/mode_bg"
             android:dividerPadding="5sp"
             android:orientation="vertical"
             android:paddingLeft="20sp"
             android:paddingTop="20sp"
-            app:layout_constraintEnd_toEndOf="@+id/linearLayout"
-            app:layout_constraintStart_toStartOf="@+id/linearLayout"
-            tools:layout_editor_absoluteY="190dp">
+            app:layout_constraintEnd_toEndOf="@+id/selection_layout"
+            app:layout_constraintHorizontal_bias="0.492"
+            app:layout_constraintStart_toStartOf="@+id/selection_layout"
+            app:layout_constraintTop_toTopOf="@+id/selection_layout">
 
-            <RadioButton
-                android:id="@+id/radio_manual"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5sp"
-                android:buttonTint="@color/colorAccent"
-                android:text="Manual Assist" />
+            <RadioGroup
+                android:id="@+id/mode_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
-            <RadioButton
-                android:id="@+id/radio_relax"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5sp"
-                android:buttonTint="@color/colorAccent"
-                android:text="Relaxed" />
+                <RadioButton
+                    android:id="@+id/radio_manual"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5sp"
+                    android:buttonTint="@color/colorAccent"
+                    android:onClick="onSelection"
+                    android:text="Manual Assist" />
 
-            <RadioButton
-                android:id="@+id/radio_fitness"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5sp"
-                android:buttonTint="@color/colorAccent"
-                android:text="Fitness" />
+                <RadioButton
+                    android:id="@+id/radio_relax"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5sp"
+                    android:buttonTint="@color/colorAccent"
+                    android:onClick="onSelection"
+                    android:text="Relaxed" />
+
+                <RadioButton
+                    android:id="@+id/radio_fitness"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5sp"
+                    android:buttonTint="@color/colorAccent"
+                    android:onClick="onSelection"
+                    android:text="Fitness" />
+            </RadioGroup>
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/linearLayout"
+            android:id="@+id/selection_layout"
             android:layout_width="273dp"
             android:layout_height="58dp"
-            android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="152dp"
-            android:background="@drawable/intor_screen_card"
+            android:layout_marginTop="240dp"
+            android:layout_marginEnd="8dp"
+            android:background="@color/colorAccent"
             android:gravity="center"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.507"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -150,6 +155,7 @@
                 android:id="@+id/textView16"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@color/colorAccent"
                 android:fontFamily="@font/roboto_medium"
                 android:text="Selection Mode"
                 android:textAlignment="center"

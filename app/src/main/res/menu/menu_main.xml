@@ -1,0 +1,22 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+   >
+
+    <item  android:id="@+id/item1"
+        android:title="Connect to i6HRc"
+        app:showAsAction="always"
+
+        android:icon="@android:drawable/btn_star"/>
+    <item  android:id="@+id/item2"
+        android:title="How it Works"
+        app:showAsAction="ifRoom"
+        android:icon="@android:drawable/btn_plus"/>
+    <item  android:id="@+id/item3"
+        android:title="About Us"
+        app:showAsAction="withText"
+        android:icon="@android:drawable/btn_plus"/>
+</menu>

@@ -4,17 +4,65 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.RadioGroup;
+import android.widget.TextView;
+
+import com.smazee.product.pedaleze.R;
+import com.smazee.product.pedaleze.model.MessageSender;
+import com.smazee.product.pedaleze.model.ProfileDetails;
 
 public class DetailsActivity extends AppCompatActivity {
 
+    public static ProfileDetails profile;
+    PrefManager prefManager;
+    RadioGroup radioGroup;
+    TextView height_txt, weight_txt, hip_txt, waist_txt, sos_txt, dob_txt, wrist_txt,email_txt;
+    String height, weight, dob, wrist_size, hip_size, sos_number;
+    int gender;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
+
+        height_txt = findViewById(R.id.height_txt);
+        weight_txt = findViewById(R.id.weight_txt);
+        hip_txt = findViewById(R.id.hip_txt);
+        waist_txt = findViewById(R.id.waist_txt);
+        wrist_txt = findViewById(R.id.wrist_size_txt);
+        sos_txt = findViewById(R.id.sos_txt);
+        dob_txt = findViewById(R.id.dob_txt);
+        radioGroup = findViewById(R.id.radioGroup);
+        prefManager = new PrefManager(this);
+        MessageSender messageSender = new MessageSender(DetailsActivity.this);
+        messageSender.getLogin(DetailsActivity.this, prefManager.getPhoneNumber(), "test");
     }
 
-    void onProceed(View view){
-        Intent toProfile = new Intent(DetailsActivity.this,ProfileActivity.class);
-        startActivity(toProfile);
+        void onProceed(View view){
+            gender = radioGroup.getCheckedRadioButtonId();
+            height = height_txt.getText().toString();
+            weight = weight_txt.getText().toString();
+            hip_size = hip_txt.getText().toString()+":"+waist_txt.getText().toString();
+            sos_number = sos_txt.getText().toString();
+            dob = dob_txt.getText().toString();
+            wrist_size = wrist_txt.getText().toString();
+
+            profile.setHeigh(height);
+            profile.setWeight(weight);
+            profile.setGender(gender);
+            profile.setHip_size(hip_size);
+            profile.setWrist_size(wrist_size);
+            profile.setSos_number(sos_number);
+            profile.setDob(dob);
+            Log.d("DetailsAct--->",profile.toString());
+            MessageSender messageSender = new MessageSender(DetailsActivity.this);
+            messageSender.updateDetails(profile);
+
+            Intent toProfile = new Intent(DetailsActivity.this,ProfileActivity.class);
+            startActivity(toProfile);
     }
 }
