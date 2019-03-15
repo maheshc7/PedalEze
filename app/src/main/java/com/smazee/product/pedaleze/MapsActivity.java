@@ -35,7 +35,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     static float prevDist=0;
     static Intent toService;
     Calendar startTime,stopTime;
-
+    TextView heart_rate;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +46,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
         distTxt = findViewById(R.id.distText);
         goBtn = findViewById(R.id.goBtn);
+        heart_rate = findViewById(R.id.heart_rate_map);
         radioGroup = findViewById(R.id.mode_group);
+
+
 
     }
 

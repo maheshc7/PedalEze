@@ -37,6 +37,7 @@ import com.smazee.product.pedaleze.model.ProfileDetails;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.Arrays;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
@@ -49,6 +50,7 @@ public class ProfileActivity extends AppCompatActivity {
     private BluetoothDevice device , myDevice;
     private BluetoothGatt gatt;
     private Handler mhandler;
+    public  MapsActivity mapsActivity;
     private boolean mScanning;
     private int REQUEST_ENABLE_BT;
     public static BluetoothSocket temp;
@@ -58,6 +60,7 @@ public class ProfileActivity extends AppCompatActivity {
     BluetoothDevice bluetoothDevice;
     String serviceUUID;
     PrefManager prefManager;
+    TextView map_heart_rate;
     private static final long SCAN_PERIOD = 10000;
     TextView bmi_txt,height_txt,weight_txt,bmi_index,heart_rate_text;
 //    private static final UUID UUID_Service = UUID.fromString("19fc95c0c11111e399040002a5d5c51b");
@@ -69,6 +72,8 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+//         mapsActivity = (MapsActivity)getApplicationContext();
+
         mhandler = new Handler();
 connect_buton = (Button)findViewById(R.id.profile_menu_btn);
 //bat_but = (Button)findViewById(R.id.battery);
@@ -378,8 +383,11 @@ public void connect(){
              @Override
              public void run() {
                String  arr;
+               byte b;
+
                arr = Arrays.toString(data);
                  heart_rate_text.setText(arr);
+//                    mapsActivity.heart_rate.setText(arr);
                  Toast.makeText(getApplicationContext(), Arrays.toString(data), Toast.LENGTH_LONG).show();
              }
          });
