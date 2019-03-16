@@ -1,5 +1,6 @@
 package com.smazee.product.pedaleze;
 
+import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
@@ -51,10 +52,12 @@ public class ProfileActivity extends AppCompatActivity {
     private BluetoothGatt gatt;
     private Handler mhandler;
     public  MapsActivity mapsActivity;
+    Intent toMap;
     private boolean mScanning;
     private int REQUEST_ENABLE_BT;
     public static BluetoothSocket temp;
     Boolean isListeningHeartRate = false;
+    boolean map=false;
     Button connect_buton , bat_but , heart_but ;
     BluetoothGatt bluetoothGatt;
     BluetoothDevice bluetoothDevice;
@@ -62,7 +65,7 @@ public class ProfileActivity extends AppCompatActivity {
     PrefManager prefManager;
     TextView map_heart_rate;
     private static final long SCAN_PERIOD = 10000;
-    TextView bmi_txt,height_txt,weight_txt,bmi_index,heart_rate_text;
+    TextView bmi_txt,height_txt,weight_txt,bmi_index,heart_rate_text,profile_name;
 //    private static final UUID UUID_Service = UUID.fromString("19fc95c0c11111e399040002a5d5c51b");
 //    private static final UUID UUID_characteristic = UUID.fromString("21fac9e0c11111e392460002a5d5c51b");
 
@@ -72,28 +75,31 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-//         mapsActivity = (MapsActivity)getApplicationContext();
+//      mapsActivity = (MapsActivity)getApplicationContext();
 
         mhandler = new Handler();
-connect_buton = (Button)findViewById(R.id.profile_menu_btn);
-//bat_but = (Button)findViewById(R.id.battery);
-//heart_but = (Button)findViewById(R.id.heart);
+        connect_buton = (Button)findViewById(R.id.profile_menu_btn);
+        //bat_but = (Button)findViewById(R.id.battery);
+        //heart_but = (Button)findViewById(R.id.heart);
         bmi_txt = findViewById(R.id.profile_bmi);
         bmi_index = findViewById(R.id.profile_bmi2);
         height_txt = findViewById(R.id.profile_height);
         weight_txt = findViewById(R.id.profile_weight);
         heart_rate_text = findViewById(R.id.heart_rate_dynamic);
+        profile_name = findViewById(R.id.profile_name);
 
+        toMap = new Intent(ProfileActivity.this,MapsActivity.class);
         prefManager = new PrefManager(this);
-//        MessageSender messageSender = new MessageSender(ProfileActivity.this);
-//        messageSender.getLogin(ProfileActivity.this,prefManager.getPhoneNumber(),"test");
+        MessageSender messageSender = new MessageSender(ProfileActivity.this);
+        messageSender.getLogin(ProfileActivity.this,prefManager.getPhoneNumber(),"test");
+
         final SlideToActView swipeBtn = findViewById(R.id.swipe_btn);
         swipeBtn.setOnSlideCompleteListener(new SlideToActView.OnSlideCompleteListener() {
             @Override
             public void onSlideComplete(SlideToActView slideToActView) {
-
-                Intent toMap = new Intent(ProfileActivity.this,MapsActivity.class);
                 startActivity(toMap);
+                map=true;
+                swipeBtn.resetSlider();
 
             }
         });
@@ -147,6 +153,7 @@ connect_buton = (Button)findViewById(R.id.profile_menu_btn);
     public void updateView(ProfileDetails prof){
         height_txt.setText(prof.getHeigh());
         weight_txt.setText(prof.getWeight());
+        profile_name.setText(prof.getName());
         int bmi = (int)(Integer.parseInt(prof.getWeight())/(Math.pow(Double.parseDouble(prof.getHeigh())/100,2)));
         bmi_txt.setText(Double.toString(bmi));
         if(bmi<=18)
@@ -385,10 +392,15 @@ public void connect(){
                String  arr;
                byte b;
 
-               arr = Arrays.toString(data);
+               arr = data[1]+"";
                  heart_rate_text.setText(arr);
+                 toMap.putExtra("bpm",arr);
 //                    mapsActivity.heart_rate.setText(arr);
-                 Toast.makeText(getApplicationContext(), Arrays.toString(data), Toast.LENGTH_LONG).show();
+                 if(map) {
+                     MapsActivity.update(arr);
+
+                 }
+                 Toast.makeText(getApplicationContext(), Arrays.toString(data), Toast.LENGTH_SHORT).show();
              }
          });
 

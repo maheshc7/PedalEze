@@ -34,8 +34,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     RadioGroup radioGroup;
     static float prevDist=0;
     static Intent toService;
+    String bpm;
     Calendar startTime,stopTime;
-    TextView heart_rate;
+    static TextView heart_rate;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,8 +49,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         goBtn = findViewById(R.id.goBtn);
         heart_rate = findViewById(R.id.heart_rate_map);
         radioGroup = findViewById(R.id.mode_group);
-
-
+        Intent intent = getIntent();
+        /*bpm = intent.getStringExtra("bpm");
+        heart_rate.setText(bpm);*/
 
     }
 
@@ -97,6 +99,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             Log.d("MapActivity-->","Give Permission");
             return;
         }
+
         mMap.setMyLocationEnabled(true);
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
         /*locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -176,5 +179,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mode_layout.setVisibility(View.GONE);
             Toast.makeText(MapsActivity.this,mode.getText()+" Mode ON!", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public static void update(String bpm){
+        heart_rate.setText(bpm+" bpm");
     }
 }

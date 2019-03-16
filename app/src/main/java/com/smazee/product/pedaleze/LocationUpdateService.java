@@ -28,6 +28,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
+import java.util.Calendar;
+
 import static com.smazee.product.pedaleze.MapsActivity.inBackground;
 import static com.smazee.product.pedaleze.MapsActivity.isTracking;
 import static com.smazee.product.pedaleze.MapsActivity.lat1;
@@ -44,11 +46,14 @@ public class LocationUpdateService extends Service {
     static Notification notification;
     int numMessages;
     Location mLastLocation;
+    long time=0;
+    Calendar calendar;
 
     public LocationUpdateService(){}
 
     public LocationUpdateService(MapsActivity activity) {
         mapsActivity = activity;
+
     }
 
     @Override
@@ -138,6 +143,7 @@ public class LocationUpdateService extends Service {
 
         @Override
         public void onLocationChanged(final Location location) {
+            calendar = Calendar.getInstance();
             lat2 = location.getLatitude();
             lon2 = location.getLongitude();
             Log.d("ServiceIntent--->", "Updating location...");
@@ -145,6 +151,7 @@ public class LocationUpdateService extends Service {
                 lat1 = lat2;
                 lon1 = lon2;
                 mLastLocation = location;
+                time=mLastLocation.getTime();
                 LatLng latLng = new LatLng(lat1, lon1);
                 mapsActivity.mMap.addMarker(new MarkerOptions().position(latLng).title("Start Point"));
                 mapsActivity.mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
@@ -165,13 +172,21 @@ public class LocationUpdateService extends Service {
                             .color(Color.RED));*/
                     prevDist = dist[0];
                     double speed = 0;
+
+
+
                     if (mLastLocation != null) {
+                        calendar.setTimeInMillis(location.getTime() - time);
+                        int s=calendar.get(Calendar.SECOND);
+                        Log.d("Service Time--->",location.getTime()+"  "+mLastLocation.getTime()+"  "+s);
                         speed = Math.sqrt(Math.pow(lon2 - lon1, 2) + Math.pow(lat2 - lat1, 2));
-                        Log.d("Speed(dist)-->", String.valueOf(speed)+"/"+(location.getTime() - mLastLocation.getTime()));
-                        speed = d/((location.getTime() - mLastLocation.getTime())/60000);
+                        Log.d("Speed(dist)-->", String.valueOf(speed)+"/"+(s));
+                        speed = d/s;
                     }
+
                     mapsActivity.distTxt.append(String.format("\nSpeed: %.2f km/h", speed*3.6));
                     mLastLocation = location;
+                    time=mLastLocation.getTime();
                     lat1 = lat2;
                     lon1 = lon2;
                 }

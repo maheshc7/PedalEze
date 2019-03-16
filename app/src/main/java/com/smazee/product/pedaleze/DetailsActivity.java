@@ -42,27 +42,27 @@ public class DetailsActivity extends AppCompatActivity {
         messageSender.getLogin(DetailsActivity.this, prefManager.getPhoneNumber(), "test");
     }
 
-        void onProceed(View view){
-            gender = radioGroup.getCheckedRadioButtonId();
-            height = height_txt.getText().toString();
-            weight = weight_txt.getText().toString();
-            hip_size = hip_txt.getText().toString()+":"+waist_txt.getText().toString();
-            sos_number = sos_txt.getText().toString();
-            dob = dob_txt.getText().toString();
-            wrist_size = wrist_txt.getText().toString();
+    public  void onProceed(View view){
+        gender = radioGroup.getCheckedRadioButtonId();
+        height = height_txt.getText().toString();
+        weight = weight_txt.getText().toString();
+        hip_size = hip_txt.getText().toString()+":"+waist_txt.getText().toString();
+        sos_number = sos_txt.getText().toString();
+        dob = dob_txt.getText().toString();
+        wrist_size = wrist_txt.getText().toString();
 
-            profile.setHeigh(height);
-            profile.setWeight(weight);
-            profile.setGender(gender);
-            profile.setHip_size(hip_size);
-            profile.setWrist_size(wrist_size);
-            profile.setSos_number(sos_number);
-            profile.setDob(dob);
-            Log.d("DetailsAct--->",profile.toString());
-            MessageSender messageSender = new MessageSender(DetailsActivity.this);
-            messageSender.updateDetails(profile);
+        profile.setHeigh(height);
+        profile.setWeight(weight);
+        profile.setGender(gender);
+        profile.setHip_size(hip_size);
+        profile.setWrist_size(wrist_size);
+        profile.setSos_number(sos_number);
+        profile.setDob(dob);
+        Log.d("DetailsAct--->",profile.toString());
+        MessageSender messageSender = new MessageSender(DetailsActivity.this);
+        messageSender.updateDetails(profile);
 
-            Intent toProfile = new Intent(DetailsActivity.this,ProfileActivity.class);
-            startActivity(toProfile);
+        Intent toProfile = new Intent(DetailsActivity.this,ProfileActivity.class);
+        startActivity(toProfile);
     }
 }
