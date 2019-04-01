@@ -51,7 +51,6 @@ public class ProfileActivity extends AppCompatActivity {
     private BluetoothDevice device , myDevice;
     private BluetoothGatt gatt;
     private Handler mhandler;
-    public  MapsActivity mapsActivity;
     Intent toMap;
     private boolean mScanning;
     private int REQUEST_ENABLE_BT;
@@ -151,19 +150,21 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     public void updateView(ProfileDetails prof){
-        height_txt.setText(prof.getHeigh());
-        weight_txt.setText(prof.getWeight());
         profile_name.setText(prof.getName());
-        int bmi = (int)(Integer.parseInt(prof.getWeight())/(Math.pow(Double.parseDouble(prof.getHeigh())/100,2)));
-        bmi_txt.setText(Double.toString(bmi));
-        if(bmi<=18)
-            bmi_index.setText("Underweight");
-        else if(bmi>=25)
-            bmi_index.setText("Overweight");
-        else
-            bmi_index.setText("Normal");
-
+        if(!prof.getHeigh().isEmpty() && !prof.getWeight().isEmpty()) {
+            height_txt.setText(prof.getHeigh());
+            weight_txt.setText(prof.getWeight());
+            int bmi = (int) (Integer.parseInt(prof.getWeight()) / (Math.pow(Double.parseDouble(prof.getHeigh()) / 100, 2)));
+            bmi_txt.setText(Double.toString(bmi));
+            if (bmi <= 18)
+                bmi_index.setText("Underweight");
+            else if (bmi >= 25)
+                bmi_index.setText("Overweight");
+            else
+                bmi_index.setText("Normal");
+        }
     }
+
     private void scanLeDevice(final boolean enable) {
         if (enable) {
             // Stops scanning after a pre-defined scan period.
@@ -185,6 +186,10 @@ public class ProfileActivity extends AppCompatActivity {
         invalidateOptionsMenu();
     }
 
+    public void editProfile(View view){
+        Intent toProfile = new Intent(ProfileActivity.this,DetailsActivity.class);
+        startActivity(toProfile);
+    }
 
     private BluetoothAdapter.LeScanCallback mLeScanCallback =
             new BluetoothAdapter.LeScanCallback() {
@@ -357,6 +362,7 @@ public void connect(){
             Log.v("test", "onServicesDiscovered");
             listenHeartRate();
 
+
         }
 
         @Override
@@ -390,8 +396,6 @@ public void connect(){
              @Override
              public void run() {
                String  arr;
-               byte b;
-
                arr = data[1]+"";
                  heart_rate_text.setText(arr);
                  toMap.putExtra("bpm",arr);

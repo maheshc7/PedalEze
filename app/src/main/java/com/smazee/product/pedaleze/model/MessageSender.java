@@ -52,6 +52,7 @@ public class MessageSender {
                     try {
                         Log.d(TAG, "Success response:\n"+response.body().getProfileDetails().toString());
                         detailsActivity.profile = response.body().getProfileDetails();
+                        detailsActivity.setProfile(response.body().getProfileDetails());
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -68,7 +69,9 @@ public class MessageSender {
             }
 
         });
-    }public void getLogin(final ProfileActivity profileActivity, String mobile, String password){
+    }
+
+    public void getLogin(final ProfileActivity profileActivity, String mobile, String password){
         MessengerApiInterface apiService = MessengerRestClient.Get().createService(MessengerApiInterface.class);
 
         LoginRequest loginRequest = new LoginRequest(mobile, password);
