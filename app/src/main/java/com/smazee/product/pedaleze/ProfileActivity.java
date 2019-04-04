@@ -1,5 +1,6 @@
 package com.smazee.product.pedaleze;
 
+import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
@@ -11,10 +12,13 @@ import android.bluetooth.BluetoothManager;
 import android.bluetooth.BluetoothProfile;
 import android.bluetooth.BluetoothSocket;
 import android.bluetooth.le.BluetoothLeScanner;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.os.Handler;
+import android.os.IBinder;
 import android.os.ParcelUuid;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -50,11 +54,12 @@ public class ProfileActivity extends AppCompatActivity {
     private BluetoothDevice device , myDevice;
     private BluetoothGatt gatt;
     private Handler mhandler;
-    public  MapsActivity mapsActivity;
+    Intent toMap;
     private boolean mScanning;
     private int REQUEST_ENABLE_BT;
     public static BluetoothSocket temp;
     Boolean isListeningHeartRate = false;
+    boolean map=false;
     Button connect_buton , bat_but , heart_but ;
     BluetoothGatt bluetoothGatt;
     BluetoothDevice bluetoothDevice;
@@ -62,38 +67,44 @@ public class ProfileActivity extends AppCompatActivity {
     PrefManager prefManager;
     TextView map_heart_rate;
     private static final long SCAN_PERIOD = 10000;
-    TextView bmi_txt,height_txt,weight_txt,bmi_index,heart_rate_text;
+    TextView bmi_txt,height_txt,weight_txt,bmi_index,heart_rate_text,profile_name;
 //    private static final UUID UUID_Service = UUID.fromString("19fc95c0c11111e399040002a5d5c51b");
-//    private static final UUID UUID_characteristic = UUID.fromString("21fac9e0c11111e392460002a5d5c51b");
-
-
+//    private static final UUID UUID_characteristic = UUID.fromString("21fac9e0c11111e392460002a5d5c51b")
+    BluetoothDevice esp32;
+    BluetoothGatt esp32Gatt;
+    BluetoothGattCharacteristic esp32GattCharacteristic;
+    public static UUID esp32Service = UUID.fromString("6e400001-b5a3-f393-e0a9-e50e24dcca9e");
+    public static UUID RXUUID = UUID.fromString("6e400002-b5a3-f393-e0a9-e50e24dcca9e");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-//         mapsActivity = (MapsActivity)getApplicationContext();
+//      mapsActivity = (MapsActivity)getApplicationContext();
 
         mhandler = new Handler();
-connect_buton = (Button)findViewById(R.id.profile_menu_btn);
-//bat_but = (Button)findViewById(R.id.battery);
-//heart_but = (Button)findViewById(R.id.heart);
+        connect_buton = findViewById(R.id.profile_menu_btn);
+        //bat_but = (Button)findViewById(R.id.battery);
+        //heart_but = (Button)findViewById(R.id.heart);
         bmi_txt = findViewById(R.id.profile_bmi);
         bmi_index = findViewById(R.id.profile_bmi2);
         height_txt = findViewById(R.id.profile_height);
         weight_txt = findViewById(R.id.profile_weight);
         heart_rate_text = findViewById(R.id.heart_rate_dynamic);
+        profile_name = findViewById(R.id.profile_name);
 
+        toMap = new Intent(ProfileActivity.this,MapsActivity.class);
         prefManager = new PrefManager(this);
-//        MessageSender messageSender = new MessageSender(ProfileActivity.this);
-//        messageSender.getLogin(ProfileActivity.this,prefManager.getPhoneNumber(),"test");
+        MessageSender messageSender = new MessageSender(ProfileActivity.this);
+        messageSender.getLogin(ProfileActivity.this,prefManager.getPhoneNumber(),"test");
+
         final SlideToActView swipeBtn = findViewById(R.id.swipe_btn);
         swipeBtn.setOnSlideCompleteListener(new SlideToActView.OnSlideCompleteListener() {
             @Override
             public void onSlideComplete(SlideToActView slideToActView) {
-
-                Intent toMap = new Intent(ProfileActivity.this,MapsActivity.class);
                 startActivity(toMap);
+                map=true;
+                swipeBtn.resetSlider();
 
             }
         });
@@ -145,18 +156,26 @@ connect_buton = (Button)findViewById(R.id.profile_menu_btn);
     }
 
     public void updateView(ProfileDetails prof){
-        height_txt.setText(prof.getHeigh());
-        weight_txt.setText(prof.getWeight());
-        int bmi = (int)(Integer.parseInt(prof.getWeight())/(Math.pow(Double.parseDouble(prof.getHeigh())/100,2)));
-        bmi_txt.setText(Double.toString(bmi));
-        if(bmi<=18)
-            bmi_index.setText("Underweight");
-        else if(bmi>=25)
-            bmi_index.setText("Overweight");
-        else
-            bmi_index.setText("Normal");
-
+        profile_name.setText(prof.getName());
+        if(!prof.getHeigh().isEmpty() && !prof.getWeight().isEmpty()) {
+            height_txt.setText(prof.getHeigh());
+            weight_txt.setText(prof.getWeight());
+            int bmi = (int) (Integer.parseInt(prof.getWeight()) / (Math.pow(Double.parseDouble(prof.getHeigh()) / 100, 2)));
+            bmi_txt.setText(Double.toString(bmi));
+            if (bmi <= 18)
+                bmi_index.setText("Underweight");
+            else if (bmi >= 25)
+                bmi_index.setText("Overweight");
+            else
+                bmi_index.setText("Normal");
+        }
     }
+
+    public void editProfile(View view){
+        Intent toProfile = new Intent(ProfileActivity.this,DetailsActivity.class);
+        startActivity(toProfile);
+    }
+
     private void scanLeDevice(final boolean enable) {
         if (enable) {
             // Stops scanning after a pre-defined scan period.
@@ -177,7 +196,6 @@ connect_buton = (Button)findViewById(R.id.profile_menu_btn);
         }
         invalidateOptionsMenu();
     }
-
 
     private BluetoothAdapter.LeScanCallback mLeScanCallback =
             new BluetoothAdapter.LeScanCallback() {
@@ -214,52 +232,52 @@ connect_buton = (Button)findViewById(R.id.profile_menu_btn);
         Log.d("Status","Disconnected");
     }
 
-public void connect(){
+    public void connect(){
 
-//    MI Band MAC
-//    bluetoothDevice = bluetoothAdapter.getRemoteDevice("DB:A9:1E:35:1E:43");
-    bluetoothDevice = bluetoothAdapter.getRemoteDevice("E1:5A:B5:72:7F:9A"); // i6HRc MAC
-    Log.v("test", "Connecting to " + "i6HRc Band"); // i6HRc
-//    Mi Band
-//    Log.v("test", "Connecting to " + "Mi Band");
-                            Log.v("test", "Device name " + bluetoothDevice.getName());
+        //    MI Band MAC
+        //    bluetoothDevice = bluetoothAdapter.getRemoteDevice("DB:A9:1E:35:1E:43");
+        bluetoothDevice = bluetoothAdapter.getRemoteDevice("E1:5A:B5:72:7F:9A"); // i6HRc MAC
+        Log.v("test", "Connecting to " + "i6HRc Band"); // i6HRc
+        //    Mi Band
+        //    Log.v("test", "Connecting to " + "Mi Band");
+        Log.v("test", "Device name " + bluetoothDevice.getName());
 
-//    serviceUUID = bluetoothDevice.getUuids().toString();
-                            bluetoothGatt = bluetoothDevice.connectGatt(getApplicationContext(), true, bluetoothGattCallback);
+        //    serviceUUID = bluetoothDevice.getUuids().toString();
+        bluetoothGatt = bluetoothDevice.connectGatt(getApplicationContext(), true, bluetoothGattCallback);
+        //    MiBand miBand = MiBand.getInstance(ProfileActivity.this);
+        //    if (!miBand.isConnected()) {
+        //        miBand.connect(new ActionCallback() {
+        //            @Override
+        //            public void onSuccess(Object data) {
+        //                Log.d("status", "Connected with Mi Band!");
+        //                //show SnackBar/Toast or something
+        //            }
+        //
+        //            @Override
+        //            public void onFail(int errorCode, String msg) {
+        //                Log.d("status", "Connection failed: " + msg);
+        //            }
+        //        });
+        //    } else {
+        //        miBand.disconnect();
+        //    }
 
-//    MiBand miBand = MiBand.getInstance(ProfileActivity.this);
-//    if (!miBand.isConnected()) {
-//        miBand.connect(new ActionCallback() {
-//            @Override
-//            public void onSuccess(Object data) {
-//                Log.d("status", "Connected with Mi Band!");
-//                //show SnackBar/Toast or something
-//            }
-//
-//            @Override
-//            public void onFail(int errorCode, String msg) {
-//                Log.d("status", "Connection failed: " + msg);
-//            }
-//        });
-//    } else {
-//        miBand.disconnect();
-//    }
 
-
-//    miBand.getBatteryInfo(new ActionCallback() {
-//        @Override
-//        public void onSuccess(final Object data) {
-//            BatteryInfo battery = (BatteryInfo) data;
-//            //get the cycle count, the level and other information
-//            Log.e("status", "Battery: " + battery.toString());
-//        }
-//
-//        @Override
-//        public void onFail(int errorCode, String msg) {
-//            Log.e("status", "Fail battery: " + msg);
-//        }
-//    });
+        //    miBand.getBatteryInfo(new ActionCallback() {
+        //        @Override
+        //        public void onSuccess(final Object data) {
+        //            BatteryInfo battery = (BatteryInfo) data;
+        //            //get the cycle count, the level and other information
+        //            Log.e("status", "Battery: " + battery.toString());
+        //        }
+        //
+        //        @Override
+        //        public void onFail(int errorCode, String msg) {
+        //            Log.e("status", "Fail battery: " + msg);
+        //        }
+        //    });
     }
+
     void startScanHeartRate() {
 //        txtByte.setText("...");
 //        Toast.makeText(this,"Scanning",Toast.LENGTH_SHORT).show();
@@ -350,6 +368,7 @@ public void connect(){
             Log.v("test", "onServicesDiscovered");
             listenHeartRate();
 
+
         }
 
         @Override
@@ -383,12 +402,20 @@ public void connect(){
              @Override
              public void run() {
                String  arr;
-               byte b;
-
-               arr = Arrays.toString(data);
+               arr = data[1]+"";
                  heart_rate_text.setText(arr);
+                 if(esp32GattCharacteristic!=null){
+                     esp32GattCharacteristic.setValue(arr);
+                     esp32Gatt.writeCharacteristic(esp32GattCharacteristic);
+
+                 }
+                 toMap.putExtra("bpm",arr);
 //                    mapsActivity.heart_rate.setText(arr);
-                 Toast.makeText(getApplicationContext(), Arrays.toString(data), Toast.LENGTH_LONG).show();
+                 if(map) {
+                     MapsActivity.update(arr);
+
+                 }
+                 Toast.makeText(getApplicationContext(), Arrays.toString(data), Toast.LENGTH_SHORT).show();
              }
          });
 
@@ -459,4 +486,74 @@ public void connect(){
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    public void connectHardware(View view){
+        esp32 = bluetoothAdapter.getRemoteDevice("CC:50:E3:8C:FF:52");
+        Log.v("ESP32Connect--->", "Connecting to " + "ESP32 ");
+        Log.v("ESP32Connect--->", "Device name " + esp32.getName());
+        esp32Gatt= esp32.connectGatt(getApplicationContext(), true, esp32GattCallback);
+
+        esp32GattCharacteristic = esp32Gatt.getService(esp32Service).getCharacteristic(RXUUID);
+        esp32Gatt.setCharacteristicNotification(esp32GattCharacteristic,true);
+    }
+
+    final BluetoothGattCallback esp32GattCallback = new BluetoothGattCallback() {
+        @Override
+        public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
+            super.onConnectionStateChange(gatt, status, newState);
+            Log.v("ESP32Connect--->", "onConnectionStateChange");
+
+            if (newState == BluetoothProfile.STATE_CONNECTED) {
+                bluetoothGatt.discoverServices();
+                Log.v("ESP32Connect--->","Connected");
+            }
+            else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
+                bluetoothGatt.disconnect();
+                Log.d("ESP32Connect--->","Disconnected");
+            }
+        }
+
+        @Override
+        public void onServicesDiscovered(BluetoothGatt gatt, int status) {
+            super.onServicesDiscovered(gatt, status);
+            Log.v("ESP32Connect--->", "onServicesDiscovered");
+        }
+
+        @Override
+        public void onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
+            super.onCharacteristicRead(gatt, characteristic, status);
+        }
+
+        @Override
+        public void onCharacteristicWrite(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
+            super.onCharacteristicWrite(gatt, characteristic, status);
+            Log.v("ESP32Connect--->", "onCharacteristicWrite");
+            byte[] data = characteristic.getValue();
+            Log.v("ESP32Connect--->",Arrays.toString(data));
+        }
+
+        @Override
+        public void onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
+            super.onCharacteristicChanged(gatt, characteristic);
+            Log.v("ESP32Connect--->", "onCharacteristicChanged");
+            final byte[] data = characteristic.getValue();
+            Log.v("ESP32Connect--->",Arrays.toString(data));
+        }
+
+        @Override
+        public void onDescriptorRead(BluetoothGatt gatt, BluetoothGattDescriptor descriptor, int status) {
+            super.onDescriptorRead(gatt, descriptor, status);
+        }
+
+        @Override
+        public void onDescriptorWrite(BluetoothGatt gatt, BluetoothGattDescriptor descriptor, int status) {
+            super.onDescriptorWrite(gatt, descriptor, status);
+            Log.v("ESP32Connect--->", "onDescriptorWrite");
+            byte[] data = descriptor.getValue();
+            Log.v("ESP32Connect--->",Arrays.toString(data));
+        }
+
+    };
+
+
 }

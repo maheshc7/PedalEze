@@ -40,6 +40,7 @@
             android:id="@+id/linear_bpm"
             android:layout_height="100dp"
             android:layout_marginTop="4dp"
+            android:paddingLeft="10sp"
             android:orientation="vertical"
             android:background="@drawable/profile_card_view"
             android:elevation="5dp"
@@ -48,15 +49,16 @@
             app:layout_constraintHorizontal_bias="0.102"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView3">
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="77"
-    android:typeface="sans"
-    android:textStyle="bold"
-android:id="@+id/heart_rate_dynamic"
-    android:textSize="34sp"
-    />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="77"
+                android:typeface="sans"
+                android:textStyle="bold"
+                android:id="@+id/heart_rate_dynamic"
+                android:textSize="34sp"/>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -70,6 +72,7 @@ android:id="@+id/heart_rate_dynamic"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                android:layout_gravity="right"
+                android:paddingBottom="10sp"
                 android:src="@drawable/heart_rate_icon"/>
         </LinearLayout>
 
@@ -77,6 +80,7 @@ android:id="@+id/heart_rate_dynamic"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginTop="4dp"
+            android:paddingLeft="10sp"
             android:background="@drawable/profile_card_view"
             android:elevation="5dp"
             android:orientation="vertical"
@@ -108,12 +112,15 @@ android:id="@+id/heart_rate_dynamic"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_gravity="right"
+                android:paddingBottom="10sp"
                 android:src="@drawable/distance_travelled_icon" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="100dp"
             android:layout_height="100dp"
+            android:layout_marginTop="4dp"
+            android:paddingLeft="10sp"
             android:background="@drawable/profile_card_view"
             android:elevation="5dp"
             android:orientation="vertical"
@@ -145,6 +152,7 @@ android:id="@+id/heart_rate_dynamic"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_gravity="right"
+                android:paddingBottom="10sp"
                 android:src="@drawable/calories_burnt_icon" />
         </LinearLayout>
 
@@ -353,21 +361,21 @@ android:id="@+id/heart_rate_dynamic"
         android:id="@+id/imageView"
         android:layout_width="64dp"
         android:layout_height="58dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
         android:background="@drawable/profile"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/profile_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:fontFamily="@font/roboto_medium"
         android:text="Santosh "
         android:textColor="@android:color/white"
@@ -375,6 +383,29 @@ android:id="@+id/heart_rate_dynamic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+    <Button
+        android:id="@+id/edit_btn"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/edit"
+        android:onClick="editProfile"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/connect_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:onClick="connectHardware"
+        android:text="Connect"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile_menu_btn" />
+
     <!--<Button-->
         <!--android:layout_height="wrap_content"-->
         <!--android:layout_width="match_parent"-->

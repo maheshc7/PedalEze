@@ -26,11 +26,12 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="72dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.688"
         tools:context=".view.MapsActivity" />
 
     <android.support.constraint.ConstraintLayout
@@ -46,18 +47,17 @@
         <android.support.constraint.ConstraintLayout
             android:id="@+id/constraintLayout"
             android:layout_width="0dp"
-            android:layout_height="74dp"
-            android:background="@color/colorAccent"
+            android:layout_height="81dp"
+            android:background="@drawable/map_bg"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent">
 
             <TextView
                 android:id="@+id/distText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="24dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
                 android:fontFamily="sans-serif-smallcaps"
@@ -72,34 +72,36 @@
                 android:id="@+id/heart_rate_map"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="160dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
                 android:layout_marginBottom="8dp"
                 android:fontFamily="sans-serif-smallcaps"
                 android:text="0.0 bpm"
                 android:textColor="@android:color/white"
                 android:textSize="30sp"
+                android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="1.0" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
         </android.support.constraint.ConstraintLayout>
 
         <Button
             android:id="@+id/goBtn"
+            style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="48dp"
-            android:background="@color/colorPrimaryDark"
-            android:fontFamily="sans-serif-smallcaps"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/shapes"
+            android:fontFamily="@font/roboto"
             android:onClick="startTrack"
             android:text="START!"
-            android:textColor="@android:color/white"
+            android:textColor="#0EE74F"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="@+id/constraintLayout"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent" />
 
         <LinearLayout
@@ -158,7 +160,7 @@
             android:layout_width="273dp"
             android:layout_height="58dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="240dp"
+            android:layout_marginTop="208dp"
             android:layout_marginEnd="8dp"
             android:background="@color/colorAccent"
             android:gravity="center"

@@ -17,9 +17,11 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.util.Calendar;
 
@@ -34,8 +36,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     RadioGroup radioGroup;
     static float prevDist=0;
     static Intent toService;
+    String bpm;
     Calendar startTime,stopTime;
-    TextView heart_rate;
+    static TextView heart_rate;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,8 +51,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         goBtn = findViewById(R.id.goBtn);
         heart_rate = findViewById(R.id.heart_rate_map);
         radioGroup = findViewById(R.id.mode_group);
-
-
+        Intent intent = getIntent();
+        bpm = intent.getStringExtra("bpm");
+        heart_rate.setText(bpm);
+        heart_rate.setVisibility(View.INVISIBLE);
 
     }
 
@@ -97,8 +102,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             Log.d("MapActivity-->","Give Permission");
             return;
         }
+
         mMap.setMyLocationEnabled(true);
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
+        mMap.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(22.2695345,75.7330751)));
         /*locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         try {
             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 2000, 20, MapsActivity.this);
@@ -149,9 +156,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if (!isTracking) {
             isTracking = true;
             goBtn.setText("STOP!");
+            heart_rate.setVisibility(View.VISIBLE);
+            heart_rate.setText("0 BPM");
             LocationUpdateService locationUpdateService = new LocationUpdateService(this);
             toService = new Intent(MapsActivity.this,LocationUpdateService.class);
             startService(toService);
+
 
         }
         else{
@@ -160,6 +170,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             goBtn.setText("START!");
             distTxt.setText("0.0 km");
             mMap.clear();
+            heart_rate.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -176,5 +187,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mode_layout.setVisibility(View.GONE);
             Toast.makeText(MapsActivity.this,mode.getText()+" Mode ON!", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public static void update(String bpm){
+        heart_rate.setText(bpm+" bpm");
     }
 }

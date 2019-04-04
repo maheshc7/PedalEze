@@ -29,7 +29,6 @@ public class CustomBluetoothProfile {
         public static UUID measurementCharacteristic = UUID.fromString("00002a37-0000-1000-8000-00805f9b34fb");
         public static UUID descriptor = UUID.fromString("00002902-0000-1000-8000-00805f9b34fb");
         public static UUID controlCharacteristic = UUID.fromString("00002a38-0000-1000-8000-00805f9b34fb");
-//
 
 //        i6HR c
 //        public static UUID service = UUID.fromString("0000180d-b5a3-f393-e0a9-e50e24dcca9e");

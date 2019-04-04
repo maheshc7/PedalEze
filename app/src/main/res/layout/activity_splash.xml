@@ -40,17 +40,18 @@
         android:layout_alignParentRight="true"
 
         android:textColor="@android:color/white" />
-<Button
-    android:id="@+id/btn_pedal"
-    android:layout_width="175dp"
-    android:layout_height="50dp"
-android:layout_marginBottom="35dp"
-    android:layout_marginRight="20dp"
-    android:layout_alignParentBottom="true"
-    android:layout_alignParentRight="true"
-    android:textColor="#fff"
-    android:background="@drawable/gradient"
-    android:text="LET'S PEDALEZE"/>
+
+    <Button
+        android:id="@+id/btn_pedal"
+        android:layout_width="175dp"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="35dp"
+        android:background="@drawable/gradient"
+        android:text="LET'S PEDALEZE"
+        android:textColor="#fff" />
     <!--<Button-->
         <!--android:id="@+id/btn_skip"-->
         <!--android:layout_width="wrap_content"-->

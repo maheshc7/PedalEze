@@ -127,6 +127,21 @@
             app:layout_constraintTop_toBottomOf="@+id/sos_txt" />
 
         <EditText
+            android:id="@+id/height_txt"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:ems="10"
+            android:inputType="number"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.14"
+            app:layout_constraintStart_toEndOf="@+id/height"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+        <EditText
             android:id="@+id/weight_txt"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
@@ -140,93 +155,10 @@
             app:layout_constraintStart_toEndOf="@+id/weight"
             app:layout_constraintTop_toBottomOf="@+id/height_txt" />
 
-        <EditText
-            android:id="@+id/wrist_size_txt"
-            android:layout_width="96dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginStart="16dp"
-            android:ems="10"
-            android:inputType="number"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.129"
-            app:layout_constraintStart_toEndOf="@+id/Wrist_size"
-            app:layout_constraintTop_toBottomOf="@+id/hip_txt" />
-
-        <EditText
-            android:id="@+id/sos_txt"
-            android:layout_width="162dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="16dp"
-            android:ems="10"
-            android:inputType="number"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.448"
-            app:layout_constraintStart_toEndOf="@+id/sos"
-            app:layout_constraintTop_toBottomOf="@+id/wrist_size_txt" />
-
-        <EditText
-            android:id="@+id/hip_txt"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="28dp"
-            android:ems="10"
-            android:inputType="number"
-            android:textSize="18sp"
-            app:layout_constraintStart_toEndOf="@+id/hw_ratio"
-            app:layout_constraintTop_toBottomOf="@+id/dob_txt" />
-
-        <EditText
-            android:id="@+id/waist_txt"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="36dp"
-            android:layout_marginStart="8dp"
-            android:ems="10"
-            android:inputType="number"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.208"
-            app:layout_constraintStart_toEndOf="@+id/hip_txt"
-            app:layout_constraintTop_toBottomOf="@+id/dob_txt" />
-
-        <EditText
-            android:id="@+id/height_txt"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:ems="10"
-            android:inputType="number"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.14"
-            app:layout_constraintStart_toEndOf="@+id/height"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-        <EditText
-            android:id="@+id/dob_txt"
-            android:layout_width="160dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:ems="10"
-            android:inputType="date"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.55"
-            app:layout_constraintStart_toEndOf="@+id/dob"
-            app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
-
         <RadioGroup
             android:id="@+id/radioGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:layout_editor_absoluteX="88dp"
-            tools:layout_editor_absoluteY="119dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.255"
             app:layout_constraintStart_toEndOf="@+id/gender"
@@ -268,6 +200,74 @@
                 app:layout_constraintStart_toEndOf="@+id/gender"
                 app:layout_constraintTop_toBottomOf="@+id/female_radio" />
         </RadioGroup>
+
+        <EditText
+            android:id="@+id/dob_txt"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:ems="10"
+            android:hint="yyyy-mm-dd"
+            android:inputType="date"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.55"
+            app:layout_constraintStart_toEndOf="@+id/dob"
+            app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+
+        <EditText
+            android:id="@+id/hip_txt"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:ems="10"
+            android:inputType="number"
+            android:textSize="18sp"
+            app:layout_constraintStart_toEndOf="@+id/hw_ratio"
+            app:layout_constraintTop_toBottomOf="@+id/dob_txt" />
+
+        <EditText
+            android:id="@+id/waist_txt"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="36dp"
+            android:ems="10"
+            android:inputType="number"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.208"
+            app:layout_constraintStart_toEndOf="@+id/hip_txt"
+            app:layout_constraintTop_toBottomOf="@+id/dob_txt" />
+
+        <EditText
+            android:id="@+id/wrist_size_txt"
+            android:layout_width="96dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:ems="10"
+            android:inputType="number"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.129"
+            app:layout_constraintStart_toEndOf="@+id/Wrist_size"
+            app:layout_constraintTop_toBottomOf="@+id/hip_txt" />
+
+        <EditText
+            android:id="@+id/sos_txt"
+            android:layout_width="162dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="16dp"
+            android:ems="10"
+            android:inputType="number"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.448"
+            app:layout_constraintStart_toEndOf="@+id/sos"
+            app:layout_constraintTop_toBottomOf="@+id/wrist_size_txt" />
+
         <TextView
             android:id="@+id/textView10"
             android:layout_width="wrap_content"
