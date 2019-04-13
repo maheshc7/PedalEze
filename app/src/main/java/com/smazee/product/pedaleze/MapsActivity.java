@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -28,6 +29,7 @@ import java.util.Calendar;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, LocationListener {
 
     protected GoogleMap mMap;
+    ConstraintLayout dist_layout,mode_layout;
     static double lon1 = 0, lon2 = 0, lat1 = 0, lat2 = 0;
     //LocationManager locationManager;
     TextView distTxt;
@@ -37,7 +39,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     static float prevDist=0;
     static Intent toService;
     String bpm;
-    Calendar startTime,stopTime;
     static TextView heart_rate;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,10 +48,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        dist_layout = findViewById(R.id.dist_layout);
+        mode_layout = findViewById(R.id.select_mode_layout);
         distTxt = findViewById(R.id.distText);
         goBtn = findViewById(R.id.goBtn);
         heart_rate = findViewById(R.id.heart_rate_map);
         radioGroup = findViewById(R.id.mode_group);
+        dist_layout.animate().translationY(300).alpha(0.0f);
         Intent intent = getIntent();
         bpm = intent.getStringExtra("bpm");
         heart_rate.setText(bpm);
@@ -170,6 +174,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             goBtn.setText("START!");
             distTxt.setText("0.0 km");
             mMap.clear();
+            dist_layout.animate().translationY(300);
+            mode_layout.animate().translationY(0).alpha(1.0f);
             heart_rate.setVisibility(View.INVISIBLE);
         }
     }
@@ -181,10 +187,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             Toast.makeText(MapsActivity.this,"Nothing selected", Toast.LENGTH_SHORT).show();
         }
         else{
-            LinearLayout selection_layout = findViewById(R.id.selection_layout);
-            LinearLayout mode_layout = findViewById(R.id.mode_layout);
-            selection_layout.setVisibility(View.GONE);
-            mode_layout.setVisibility(View.GONE);
+            mode_layout.animate().translationY(-1000).alpha(0.0f).setDuration(1500);
+            goBtn.animate().rotationBy(360).setDuration(2000);
+            dist_layout.animate().translationY(0).alpha(1.0f).setDuration(1500);
             Toast.makeText(MapsActivity.this,mode.getText()+" Mode ON!", Toast.LENGTH_SHORT).show();
         }
     }

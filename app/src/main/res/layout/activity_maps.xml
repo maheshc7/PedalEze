@@ -31,12 +31,12 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.688"
         tools:context=".view.MapsActivity" />
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -45,142 +45,171 @@
         app:layout_constraintVertical_bias="0.0">
 
         <android.support.constraint.ConstraintLayout
-            android:id="@+id/constraintLayout"
-            android:layout_width="0dp"
-            android:layout_height="81dp"
-            android:background="@drawable/map_bg"
+            android:id="@+id/dist_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
-            <TextView
-                android:id="@+id/distText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:fontFamily="sans-serif-smallcaps"
-                android:text="0.0 km"
-                android:textColor="@android:color/white"
-                android:textSize="30sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/heart_rate_map"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="24dp"
-                android:layout_marginBottom="8dp"
-                android:fontFamily="sans-serif-smallcaps"
-                android:text="0.0 bpm"
-                android:textColor="@android:color/white"
-                android:textSize="30sp"
-                android:visibility="visible"
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/constraintLayout"
+                android:layout_width="0dp"
+                android:layout_height="81dp"
+                android:animateLayoutChanges="true"
+                android:background="@drawable/map_bg"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintStart_toStartOf="parent">
+
+                <TextView
+                    android:id="@+id/distText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:fontFamily="sans-serif-smallcaps"
+                    android:text="0.0 km"
+                    android:textColor="@android:color/white"
+                    android:textSize="30sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/heart_rate_map"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginBottom="8dp"
+                    android:fontFamily="sans-serif-smallcaps"
+                    android:text="0.0 bpm"
+                    android:textColor="@android:color/white"
+                    android:textSize="30sp"
+                    android:visibility="visible"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </android.support.constraint.ConstraintLayout>
+
+            <Button
+                android:id="@+id/goBtn"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/shapes"
+                android:fontFamily="@font/roboto"
+                android:onClick="startTrack"
+                android:text="START!"
+                android:textColor="#0EE74F"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="@+id/constraintLayout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent" />
+
         </android.support.constraint.ConstraintLayout>
 
-        <Button
-            android:id="@+id/goBtn"
-            style="@style/Widget.AppCompat.Button.Borderless"
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/select_mode_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="180dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/shapes"
-            android:fontFamily="@font/roboto"
-            android:onClick="startTrack"
-            android:text="START!"
-            android:textColor="#0EE74F"
-            android:textSize="24sp"
-            app:layout_constraintBottom_toBottomOf="@+id/constraintLayout"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <LinearLayout
-            android:id="@+id/mode_layout"
-            android:layout_width="188dp"
-            android:layout_height="154dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="36dp"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/mode_bg"
-            android:dividerPadding="5sp"
-            android:orientation="vertical"
-            android:paddingLeft="20sp"
-            android:paddingTop="20sp"
-            app:layout_constraintEnd_toEndOf="@+id/selection_layout"
-            app:layout_constraintHorizontal_bias="0.492"
-            app:layout_constraintStart_toStartOf="@+id/selection_layout"
-            app:layout_constraintTop_toTopOf="@+id/selection_layout">
-
-            <RadioGroup
-                android:id="@+id/mode_group"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <RadioButton
-                    android:id="@+id/radio_manual"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5sp"
-                    android:buttonTint="@color/colorAccent"
-                    android:onClick="onSelection"
-                    android:text="Manual Assist" />
-
-                <RadioButton
-                    android:id="@+id/radio_relax"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5sp"
-                    android:buttonTint="@color/colorAccent"
-                    android:onClick="onSelection"
-                    android:text="Relaxed" />
-
-                <RadioButton
-                    android:id="@+id/radio_fitness"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5sp"
-                    android:buttonTint="@color/colorAccent"
-                    android:onClick="onSelection"
-                    android:text="Fitness" />
-            </RadioGroup>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/selection_layout"
-            android:layout_width="273dp"
-            android:layout_height="58dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="208dp"
-            android:layout_marginEnd="8dp"
-            android:background="@color/colorAccent"
-            android:gravity="center"
-            android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/textView16"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/colorAccent"
-                android:fontFamily="@font/roboto_medium"
-                android:text="Selection Mode"
-                android:textAlignment="center"
-                android:textColor="@android:color/white"
-                android:textSize="24sp" />
+            <LinearLayout
+                android:id="@+id/mode_layout"
+                android:layout_width="188dp"
+                android:layout_height="154dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="36dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:animateLayoutChanges="true"
+                android:background="@drawable/mode_bg"
+                android:dividerPadding="5sp"
+                android:orientation="vertical"
+                android:paddingLeft="20sp"
+                android:paddingTop="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/selection_layout"
+                app:layout_constraintHorizontal_bias="0.492"
+                app:layout_constraintStart_toStartOf="@+id/selection_layout"
+                app:layout_constraintTop_toTopOf="@+id/selection_layout">
 
-        </LinearLayout>
+                <RadioGroup
+                    android:id="@+id/mode_group"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <RadioButton
+                        android:id="@+id/radio_manual"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5sp"
+                        android:buttonTint="@color/colorAccent"
+                        android:onClick="onSelection"
+                        android:text="Manual Assist" />
+
+                    <RadioButton
+                        android:id="@+id/radio_relax"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5sp"
+                        android:buttonTint="@color/colorAccent"
+                        android:onClick="onSelection"
+                        android:text="Relaxed" />
+
+                    <RadioButton
+                        android:id="@+id/radio_fitness"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5sp"
+                        android:buttonTint="@color/colorAccent"
+                        android:onClick="onSelection"
+                        android:text="Fitness" />
+                </RadioGroup>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/selection_layout"
+                android:layout_width="273dp"
+                android:layout_height="58dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:animateLayoutChanges="true"
+                android:background="@color/colorAccent"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/textView16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorAccent"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="Selection Mode"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/white"
+                    android:textSize="24sp" />
+
+            </LinearLayout>
+        </android.support.constraint.ConstraintLayout>
+
     </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>
