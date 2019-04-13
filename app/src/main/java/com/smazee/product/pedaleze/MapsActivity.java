@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -14,6 +17,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +26,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.smazee.product.pedaleze.ProfileActivity;
 
 import java.util.Calendar;
 
@@ -31,6 +36,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     static double lon1 = 0, lon2 = 0, lat1 = 0, lat2 = 0;
     //LocationManager locationManager;
     TextView distTxt;
+    public static int mode_value;
     public static boolean isTracking = false, inBackground=false;
     Button goBtn;
     RadioGroup radioGroup;
@@ -38,11 +44,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     static Intent toService;
     String bpm;
     Calendar startTime,stopTime;
+    public ProfileActivity profileActivity;
     static TextView heart_rate;
+    static  Handler mhandler;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+        Toast.makeText(getApplicationContext(), "Wear Helmet Before you start ! Have a Safe Ride !! With Love from Pedaleze !!!", Toast.LENGTH_SHORT).show();
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -55,6 +64,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         bpm = intent.getStringExtra("bpm");
         heart_rate.setText(bpm);
         heart_rate.setVisibility(View.INVISIBLE);
+        mhandler = new Handler(Looper.getMainLooper()){
+            public void handleMessage(Message message) {
+                switch(message.what){
+                    case 1 :  Toast.makeText(MapsActivity.this,"Band Got Disconnected", Toast.LENGTH_SHORT).show();break;
+                }
+            }
+        };
+        profileActivity = new ProfileActivity();
 
     }
 
@@ -186,10 +203,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             selection_layout.setVisibility(View.GONE);
             mode_layout.setVisibility(View.GONE);
             Toast.makeText(MapsActivity.this,mode.getText()+" Mode ON!", Toast.LENGTH_SHORT).show();
+            if(mode.getText().equals("Relaxed")){
+                mode_value = 0;
+            }else{
+                mode_value = 1;
+            }
         }
     }
 
     public static void update(String bpm){
         heart_rate.setText(bpm+" bpm");
+        ProfileActivity.mode_val = mode_value;
+        if(ProfileActivity.band_status == 0){
+            Message message = mhandler.obtainMessage(1, "Band Got DisConnected , Trying to Connect . Kindly CHeck Band Power"); // 2 for Band Connected
+            message.sendToTarget();
+            ProfileActivity profileActivity1 = new ProfileActivity();
+            profileActivity1.connect_band_auto();
+        }else{
+
+
+        }
     }
 }

@@ -126,14 +126,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
-                <RadioButton
-                    android:id="@+id/radio_manual"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5sp"
-                    android:buttonTint="@color/colorAccent"
-                    android:onClick="onSelection"
-                    android:text="Manual Assist" />
+                <!--<RadioButton-->
+                    <!--android:id="@+id/radio_manual"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_margin="5sp"-->
+                    <!--android:buttonTint="@color/colorAccent"-->
+                    <!--android:onClick="onSelection"-->
+                    <!--android:text="Manual Assist" />-->
 
                 <RadioButton
                     android:id="@+id/radio_relax"

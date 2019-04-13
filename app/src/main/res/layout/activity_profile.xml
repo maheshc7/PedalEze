@@ -346,16 +346,30 @@
     <Button
         android:id="@+id/profile_menu_btn"
         style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
-        android:background="@drawable/menu"
+        android:background="@drawable/splashscreen3"
         android:textColor="@android:color/white"
         android:textSize="24sp"
 
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <!--<Button-->
+        <!--android:id="@+id/hardware_connect_button"-->
+        <!--style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"-->
+        <!--android:layout_width="25dp"-->
+        <!--android:layout_height="25dp"-->
+        <!--android:layout_marginStart="360dp"-->
+        <!--android:layout_marginTop="24dp"-->
+        <!--android:background="@drawable/menu"-->
+        <!--android:textColor="@android:color/white"-->
+        <!--android:textSize="24sp"-->
+        <!--app:layout_constraintLeft_toRightOf="@+id/profile_menu_btn"-->
+        <!--app:layout_constraintStart_toStartOf="parent"-->
+        <!--app:layout_constraintTop_toTopOf="parent" />-->
 
     <ImageView
         android:id="@+id/imageView"
@@ -385,26 +399,26 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <Button
-        android:id="@+id/edit_btn"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:id="@+id/band_btn"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
-        android:background="@drawable/edit"
+        android:background="@drawable/heartrate"
         android:onClick="editProfile"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/connect_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:onClick="connectHardware"
-        android:text="Connect"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_menu_btn" />
+    <!--<Button-->
+        <!--android:id="@+id/connect_btn"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginStart="8dp"-->
+        <!--android:layout_marginTop="8dp"-->
+        <!--android:onClick="connectHardware"-->
+        <!--android:text="Connect"-->
+        <!--app:layout_constraintStart_toStartOf="parent"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/profile_menu_btn" />-->
 
     <!--<Button-->
         <!--android:layout_height="wrap_content"-->
