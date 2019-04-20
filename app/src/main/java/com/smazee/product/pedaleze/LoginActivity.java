@@ -26,6 +26,7 @@ import com.google.firebase.auth.PhoneAuthProvider;
 import com.msg91.sendotp.library.SendOtpVerification;
 import com.msg91.sendotp.library.Verification;
 import com.msg91.sendotp.library.VerificationListener;
+import com.smazee.product.pedaleze.model.MessageSender;
 
 import java.util.concurrent.TimeUnit;
 
@@ -193,8 +194,8 @@ public class LoginActivity extends AppCompatActivity implements VerificationList
             otpTxt.setError("Cannot be empty.");
             return;
         }
-if(mVerification != null){
-    mVerification.verify(code);
+        if(mVerification != null){
+            mVerification.verify(code);
 //    prefManager.setFirstTimeLogin(false);
 //    Intent toDetails = new Intent(LoginActivity.this,DetailsActivity.class);
 //    startActivity(toDetails);
@@ -221,6 +222,10 @@ if(mVerification != null){
 
     }
 
+    public void resendOTP(View view){
+        mVerification.resend("text");
+    }
+
     @Override
     public void onInitiated(String response) {
         Log.d(TAG, "Initialized!" + response);
@@ -239,8 +244,19 @@ if(mVerification != null){
         //OTP verified successfully.
         prefManager.setFirstTimeLogin(false);
         prefManager.setPhoneNumber(phoneTxt.getText().toString());
-        Intent toDetails = new Intent(LoginActivity.this,DetailsActivity.class);
-        startActivity(toDetails);
+        MessageSender messageSender = new MessageSender(LoginActivity.this);
+        messageSender.getLogin(LoginActivity.this, prefManager.getPhoneNumber(), "test");
+    }
+
+    public void intent(boolean fill){
+        if(fill){
+            Intent toProfile = new Intent(LoginActivity.this,ProfileActivity.class);
+            startActivity(toProfile);
+        }
+        else{
+            Intent toDetails = new Intent(LoginActivity.this,DetailsActivity.class);
+            startActivity(toDetails);
+        }
     }
 
     @Override

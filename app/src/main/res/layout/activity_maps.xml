@@ -8,6 +8,18 @@
     android:background="#c4d9f0"
     tools:context=".MapsActivity">
 
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:context=".view.MapsActivity" />
+
     <Button
         android:id="@+id/map_menu_btn"
         style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
@@ -20,18 +32,6 @@
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <fragment
-        android:id="@+id/map"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:context=".view.MapsActivity" />
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -47,26 +47,124 @@
         <android.support.constraint.ConstraintLayout
             android:id="@+id/dist_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="371dp"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent">
+
+            <LinearLayout
+                android:id="@+id/dest_layout"
+                android:layout_width="306dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/text_bg"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10sp"
+                    android:layout_marginRight="10sp"
+                    android:src="@drawable/search_icon" />
+
+                <EditText
+                    android:id="@+id/destText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10sp"
+                    android:layout_weight="1"
+                    android:ems="10"
+
+                    android:fontFamily="@font/roboto"
+                    android:hint="Select Destination"
+                    android:inputType="phone"
+                    android:textColorLink="#51DF54" />
+            </LinearLayout>
 
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/constraintLayout"
                 android:layout_width="0dp"
-                android:layout_height="81dp"
+                android:layout_height="230sp"
                 android:animateLayoutChanges="true"
                 android:background="@drawable/map_bg"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent">
+
+                <TextView
+                    android:id="@+id/calories_burnt3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="36dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="532"
+                    android:textSize="28sp"
+                    android:textStyle="bold"
+                    android:typeface="sans"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.484"
+                    app:layout_constraintStart_toEndOf="@+id/divider5"
+                    app:layout_constraintTop_toBottomOf="@+id/heart_rate_map" />
+
+                <TextView
+                    android:id="@+id/textView20"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_marginBottom="8dp"
+                    android:fontFamily="@font/roboto_light"
+                    android:text="kcal"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toTopOf="@+id/map_calories_img"
+                    app:layout_constraintEnd_toEndOf="@+id/calories_burnt3"
+                    app:layout_constraintStart_toStartOf="@+id/calories_burnt3"
+                    app:layout_constraintTop_toBottomOf="@+id/calories_burnt3" />
+
+                <TextView
+                    android:id="@+id/map_heart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="36dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="77"
+                    android:textSize="28sp"
+                    android:textStyle="bold"
+                    android:typeface="sans"
+                    app:layout_constraintEnd_toStartOf="@+id/divider4"
+                    app:layout_constraintHorizontal_bias="0.506"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/distText" />
+
+                <TextView
+                    android:id="@+id/textView18"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_marginBottom="8dp"
+                    android:fontFamily="@font/roboto_light"
+                    android:text="bpm"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toTopOf="@+id/map_heart_img"
+                    app:layout_constraintEnd_toEndOf="@+id/map_heart"
+                    app:layout_constraintStart_toStartOf="@+id/map_heart"
+                    app:layout_constraintTop_toBottomOf="@+id/map_heart" />
 
                 <TextView
                     android:id="@+id/distText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
+                    android:layout_marginStart="36dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
                     android:fontFamily="sans-serif-smallcaps"
@@ -75,14 +173,15 @@
                     android:textSize="30sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.079" />
 
                 <TextView
                     android:id="@+id/heart_rate_map"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:layout_marginEnd="24dp"
+                    android:layout_marginEnd="32dp"
                     android:layout_marginBottom="8dp"
                     android:fontFamily="sans-serif-smallcaps"
                     android:text="0.0 bpm"
@@ -91,7 +190,144 @@
                     android:visibility="visible"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.079" />
+
+                <ImageView
+                    android:id="@+id/map_heart_img"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:src="@drawable/heart_rate_icon"
+                    app:layout_constraintBottom_toTopOf="@+id/textView8"
+                    app:layout_constraintEnd_toStartOf="@+id/divider4"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <ImageView
+                    android:id="@+id/map_dist_img"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:src="@drawable/distance_travelled_icon"
+                    app:layout_constraintBottom_toTopOf="@+id/textView9"
+                    app:layout_constraintEnd_toStartOf="@+id/divider5"
+                    app:layout_constraintStart_toEndOf="@+id/divider4" />
+
+                <TextView
+                    android:id="@+id/kilometer3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="36dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="125"
+                    android:textSize="28sp"
+                    android:textStyle="bold"
+                    android:typeface="sans"
+                    app:layout_constraintEnd_toStartOf="@+id/divider5"
+                    app:layout_constraintHorizontal_bias="0.537"
+                    app:layout_constraintStart_toEndOf="@+id/divider4"
+                    app:layout_constraintTop_toBottomOf="@+id/distText" />
+
+                <TextView
+                    android:id="@+id/textView19"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_marginBottom="8dp"
+                    android:fontFamily="@font/roboto_light"
+                    android:text="kms"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toTopOf="@+id/map_dist_img"
+                    app:layout_constraintEnd_toEndOf="@+id/kilometer3"
+                    app:layout_constraintHorizontal_bias="0.444"
+                    app:layout_constraintStart_toStartOf="@+id/kilometer3"
+                    app:layout_constraintTop_toBottomOf="@+id/kilometer3" />
+
+                <ImageView
+                    android:id="@+id/map_calories_img"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:src="@drawable/calories_burnt_icon"
+                    app:layout_constraintBottom_toTopOf="@+id/textView11"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/divider5" />
+
+                <View
+                    android:id="@+id/divider4"
+                    android:layout_width="3dp"
+                    android:layout_height="65dp"
+                    android:layout_marginStart="120dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="24dp"
+                    android:background="?android:attr/listDivider"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/distText"
+                    app:layout_constraintVertical_bias="0.64" />
+
+                <View
+                    android:id="@+id/divider5"
+                    android:layout_width="3dp"
+                    android:layout_height="65dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="128dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="?android:attr/listDivider"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/heart_rate_map"
+                    app:layout_constraintVertical_bias="0.442" />
+
+                <TextView
+                    android:id="@+id/textView8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="16dp"
+                    android:fontFamily="@font/roboto_light"
+                    android:text="Heart Rate"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/divider4"
+                    app:layout_constraintHorizontal_bias="0.595"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="16dp"
+                    android:fontFamily="@font/roboto_light"
+                    android:text="Distance"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/divider5"
+                    app:layout_constraintHorizontal_bias="0.505"
+                    app:layout_constraintStart_toEndOf="@+id/divider4" />
+
+                <TextView
+                    android:id="@+id/textView11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="16dp"
+                    android:fontFamily="@font/roboto_light"
+                    android:text="Calories Burnt"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.527"
+                    app:layout_constraintStart_toEndOf="@+id/divider5" />
+
             </android.support.constraint.ConstraintLayout>
 
             <Button
@@ -100,28 +336,117 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
-                android:layout_marginBottom="16dp"
                 android:background="@drawable/shapes"
                 android:fontFamily="@font/roboto"
                 android:onClick="startTrack"
                 android:text="START!"
                 android:textColor="#0EE74F"
                 android:textSize="24sp"
-                app:layout_constraintBottom_toBottomOf="@+id/constraintLayout"
+                app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/dest_layout"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <Button
+                android:id="@+id/map_dest"
+                android:layout_width="40sp"
+                android:layout_height="40sp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/destination"
+                android:onClick="getDest"
+                app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+                app:layout_constraintEnd_toStartOf="@+id/goBtn"
+                app:layout_constraintHorizontal_bias="0.275"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/dest_layout" />
+
+            <Button
+                android:id="@+id/map_sos"
+                android:layout_width="40sp"
+                android:layout_height="40sp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/sos"
+                android:onClick="sendSOS"
+                app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.724"
+                app:layout_constraintStart_toEndOf="@+id/goBtn"
+                app:layout_constraintTop_toBottomOf="@+id/dest_layout"
+                app:layout_constraintVertical_bias="0.541" />
 
         </android.support.constraint.ConstraintLayout>
 
         <android.support.constraint.ConstraintLayout
-            android:id="@+id/select_mode_layout"
+            android:id="@+id/set_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="180dp"
             android:layout_marginEnd="8dp"
+            android:alpha="0"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.503"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:id="@+id/set_txt"
+                android:layout_width="237dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/text_bg"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <TextView
+                    android:id="@+id/textView15"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="15sp"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="All set to go!"
+                    android:textSize="30sp" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/set_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="44dp"
+                android:src="@drawable/all_set_to_go"
+                app:layout_constraintBottom_toBottomOf="@+id/set_txt"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.95" />
+
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/select_mode_layout"
+            android:layout_width="272dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="184dp"
+            android:layout_marginEnd="8dp"
+            android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -141,9 +466,8 @@
                 android:paddingLeft="20sp"
                 android:paddingTop="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/selection_layout"
-                app:layout_constraintHorizontal_bias="0.492"
-                app:layout_constraintStart_toStartOf="@+id/selection_layout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/selection_layout">
 
                 <RadioGroup
@@ -182,11 +506,8 @@
 
             <LinearLayout
                 android:id="@+id/selection_layout"
-                android:layout_width="273dp"
+                android:layout_width="271dp"
                 android:layout_height="58dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="8dp"
                 android:animateLayoutChanges="true"
                 android:background="@color/colorAccent"
                 android:gravity="center"

@@ -199,11 +199,12 @@ switch (message.what){
             else
                 bmi_index.setText("Normal");
         }
+        toMap.putExtra("phno",prof.getSos_number());
     }
 
     public void editProfile(View view){
-        Intent toProfile = new Intent(ProfileActivity.this,DetailsActivity.class);
-        startActivity(toProfile);
+        Intent toDetails = new Intent(ProfileActivity.this,DetailsActivity.class);
+        startActivity(toDetails);
     }
 
     private void scanLeDevice(final boolean enable) {
@@ -256,34 +257,37 @@ switch (message.what){
 //        startScanHeartRate();
 //        listenHeartRate();
     }
-void esp32Connected(UUID temp1){
 
-    tempDatasend = temp1;
-    Log.v("ESP32Connect--->","Connected");
-    bservice = bluetoothGatt.getService(temp1);
-    if(bservice == null){
-        Log.v("Status of Bservice","Null");
+    void esp32Connected(UUID temp1){
 
-    }else{
-       bcharacterstic = bservice.getCharacteristic(RXUUID);
-       if(bcharacterstic == null){
-           Log.v("Status of Bcharactersti","Characterstic not Working");
-       }else{
-           Log.v("Status of Bcharactersti","Characterstic Working");
-           bcharacterstic.setValue("Pedaleze App Connected ");
-           bluetoothGatt.writeCharacteristic(bcharacterstic);
+        tempDatasend = temp1;
+        Log.v("ESP32Connect--->","Connected");
+        bservice = bluetoothGatt.getService(temp1);
+        if(bservice == null){
+            Log.v("Status of Bservice","Null");
 
-       }
+        }else{
+           bcharacterstic = bservice.getCharacteristic(RXUUID);
+           if(bcharacterstic == null){
+               Log.v("Status of Bcharactersti","Characterstic not Working");
+           }else{
+               Log.v("Status of Bcharactersti","Characterstic Working");
+               bcharacterstic.setValue("Pedaleze App Connected ");
+               bluetoothGatt.writeCharacteristic(bcharacterstic);
+
+           }
+        }
+
     }
 
-}
-public void sendDatatoHardware(String arr , int mode){
-    bservice = bluetoothGatt.getService(tempDatasend);
-    bcharacterstic = bservice.getCharacteristic(RXUUID);
-    String data = arr+","+mode;
-    bcharacterstic.setValue(data);
-    bluetoothGatt.writeCharacteristic(bcharacterstic);
-}
+    public void sendDatatoHardware(String arr , int mode){
+        bservice = bluetoothGatt.getService(tempDatasend);
+        bcharacterstic = bservice.getCharacteristic(RXUUID);
+        String data = arr+","+mode;
+        bcharacterstic.setValue(data);
+        bluetoothGatt.writeCharacteristic(bcharacterstic);
+    }
+
     void stateDisconnected() {
         band_status = 0;
         Bandgatt.disconnect();
@@ -309,6 +313,7 @@ public void sendDatatoHardware(String arr , int mode){
 
 
     }
+
     public void connect_band(){
         Toast.makeText(getApplicationContext(), "Connecting to the Band", Toast.LENGTH_SHORT).show();
 //        banddevice = bluetoothAdapter.getRemoteDevice("F9:2D:2A:50:B9:EC"); DB:A9:1E:35:1E:43
@@ -317,6 +322,7 @@ public void sendDatatoHardware(String arr , int mode){
         Log.v("test", "Device name " + banddevice.getName());
         Bandgatt = banddevice.connectGatt(getApplicationContext(),true,bluetoothGattCallback);
     }
+
     public void connect_band_auto(){
 //        Toast.makeText(getApplicationContext(), "Connecting to the Band", Toast.LENGTH_SHORT).show();
 //        banddevice = bluetoothAdapter.getRemoteDevice("F9:2D:2A:50:B9:EC"); DB:A9:1E:35:1E:43
@@ -325,6 +331,7 @@ public void sendDatatoHardware(String arr , int mode){
         Log.v("test", "Device name " + banddevice.getName());
         Bandgatt = banddevice.connectGatt(getApplicationContext(),true,bluetoothGattCallback);
     }
+
     void startScanHeartRate() {
 //        txtByte.setText("...");
 //        Toast.makeText(this,"Scanning",Toast.LENGTH_SHORT).show();
@@ -345,6 +352,7 @@ public void sendDatatoHardware(String arr , int mode){
         Bandgatt.writeDescriptor(descriptor);
         isListeningHeartRate = true;
     }
+
     void bandConnected(UUID temp2){
         Log.v("gg","fdasdfads");
         bandservice = Bandgatt.getService(temp2);

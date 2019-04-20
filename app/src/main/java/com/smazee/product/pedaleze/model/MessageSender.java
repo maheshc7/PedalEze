@@ -2,10 +2,12 @@ package com.smazee.product.pedaleze.model;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.smazee.product.pedaleze.DetailsActivity;
+import com.smazee.product.pedaleze.LoginActivity;
 import com.smazee.product.pedaleze.ProfileActivity;
 import com.smazee.product.pedaleze.model.rest.MessengerApiInterface;
 import com.smazee.product.pedaleze.model.rest.MessengerRestClient;
@@ -35,7 +37,48 @@ public class MessageSender {
         context = ctx;
     }
 
-    public void getLogin(final DetailsActivity detailsActivity, String mobile, String password){
+    public void getLogin(final LoginActivity loginActivity, String mobile, String password){
+        MessengerApiInterface apiService = MessengerRestClient.Get().createService(MessengerApiInterface.class);
+
+        LoginRequest loginRequest = new LoginRequest(mobile, password);
+        Call<LoginResponse> call = apiService.getLogin(loginRequest);
+        call.enqueue(new Callback<LoginResponse>() {
+            @Override
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                Log.d(TAG, "Response Code is " + String.valueOf(response.code()));
+                Log.d(TAG, "GetLogin method called");
+
+                boolean isSuccess = response.isSuccessful();
+
+                if(isSuccess) {
+                    try {
+                        Log.d(TAG, "Success response:\n"+response.body().getProfileDetails().toString());
+                        DetailsActivity.profile=response.body().getProfileDetails();
+                        Log.d("check--->",DetailsActivity.profile.toString());
+                        if(response.body().getProfileDetails().getDob().isEmpty()){
+                            loginActivity.intent(false);
+                        }
+                        else {
+                            loginActivity.intent(true);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
+                Log.d(TAG, "GetLogin On Failure");
+                Log.d(TAG,"failed to connect: "+t.getMessage());
+                Toast.makeText(context, "connection failed", Toast.LENGTH_LONG).show();
+
+            }
+
+        });
+    }
+
+    /*public void getLogin(final DetailsActivity detailsActivity, String mobile, String password){
         MessengerApiInterface apiService = MessengerRestClient.Get().createService(MessengerApiInterface.class);
 
         LoginRequest loginRequest = new LoginRequest(mobile, password);
@@ -69,7 +112,7 @@ public class MessageSender {
             }
 
         });
-    }
+    }*/
 
     public void getLogin(final ProfileActivity profileActivity, String mobile, String password){
         MessengerApiInterface apiService = MessengerRestClient.Get().createService(MessengerApiInterface.class);
@@ -108,7 +151,7 @@ public class MessageSender {
 
     public void updateDetails(ProfileDetails prof){
         MessengerApiInterface apiService = MessengerRestClient.Get().createService(MessengerApiInterface.class);
-
+        Log.d(TAG,prof.toString());
         LoginRequest loginRequest = new LoginRequest(prof);
         Call<LoginResponse> call = apiService.updateUser(loginRequest);
         call.enqueue(new Callback<LoginResponse>() {

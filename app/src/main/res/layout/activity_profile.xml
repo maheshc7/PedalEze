@@ -36,58 +36,61 @@
             app:layout_constraintTop_toBottomOf="@+id/textView13" />
 
         <LinearLayout
-            android:layout_width="100dp"
             android:id="@+id/linear_bpm"
+            android:layout_width="100dp"
             android:layout_height="100dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="4dp"
-            android:paddingLeft="10sp"
-            android:orientation="vertical"
             android:background="@drawable/profile_card_view"
             android:elevation="5dp"
+            android:orientation="vertical"
+            android:paddingLeft="10sp"
             android:translationZ="5dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.102"
+            app:layout_constraintHorizontal_bias="0.026"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView3">
 
             <TextView
+                android:id="@+id/heart_rate_dynamic"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="77"
-                android:typeface="sans"
+                android:textSize="34sp"
                 android:textStyle="bold"
-                android:id="@+id/heart_rate_dynamic"
-                android:textSize="34sp"/>
+                android:typeface="sans" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="bpm"
-                android:typeface="sans"
+                android:textSize="11sp"
                 android:textStyle="bold"
 
-                android:textSize="11sp"
-                />
+                android:typeface="sans" />
+
             <ImageView
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-               android:layout_gravity="right"
+                android:layout_gravity="right"
                 android:paddingBottom="10sp"
-                android:src="@drawable/heart_rate_icon"/>
+                android:src="@drawable/heart_rate_icon" />
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/linearLayout4"
             android:layout_width="100dp"
             android:layout_height="100dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="4dp"
-            android:paddingLeft="10sp"
+            android:layout_marginEnd="8dp"
             android:background="@drawable/profile_card_view"
             android:elevation="5dp"
             android:orientation="vertical"
+            android:paddingLeft="10sp"
             android:translationZ="5dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.483"
-            app:layout_constraintStart_toStartOf="@+id/linear_bpm"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView3">
 
             <TextView
@@ -117,16 +120,17 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/linearLayout3"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_marginTop="4dp"
-            android:paddingLeft="10sp"
+            android:layout_marginEnd="8dp"
             android:background="@drawable/profile_card_view"
             android:elevation="5dp"
             android:orientation="vertical"
+            android:paddingLeft="10sp"
             android:translationZ="5dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.948"
+            app:layout_constraintHorizontal_bias="0.973"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView3">
 
@@ -160,15 +164,15 @@
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
             android:fontFamily="@font/roboto_medium"
             android:text="Your Profile"
             android:textColor="@color/fg_text"
             android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.027"
+            app:layout_constraintHorizontal_bias="0.037"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -351,9 +355,10 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:background="@drawable/splashscreen3"
+        android:onClick="editProfile"
         android:textColor="@android:color/white"
-        android:textSize="24sp"
 
+        android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -408,6 +413,17 @@
         android:onClick="editProfile"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="61dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:onClick="editProfile"
+        android:text="edit"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile_menu_btn" />
 
     <!--<Button-->
         <!--android:id="@+id/connect_btn"-->

@@ -20,9 +20,10 @@ public class LoginRequest {
         this.weight=prof.getWeight();
         this.hip_size=prof.getHip_size();
         this.wrist_size=prof.getWrist_size();
-        this.sos_number=prof.getSos_number();
+        this.sos_number=Long.parseLong(prof.getSos_number());
         this.name=prof.getName();
         this.token=prof.getToken();
+        this.gender=prof.getGender()+"";
 
 
     }
@@ -46,7 +47,7 @@ public class LoginRequest {
     private String hip_size;
 
     @SerializedName("sos_number")
-    private String sos_number;
+    private long sos_number;
 
     @SerializedName("token")
     private int token;
@@ -56,4 +57,7 @@ public class LoginRequest {
 
     @SerializedName("password")
     private String password;
+
+    @SerializedName("gender")
+    private String gender;
 }
