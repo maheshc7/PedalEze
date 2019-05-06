@@ -85,7 +85,7 @@
 
                     android:fontFamily="@font/roboto"
                     android:hint="Select Destination"
-                    android:inputType="phone"
+                    android:inputType="textPostalAddress"
                     android:textColorLink="#51DF54" />
             </LinearLayout>
 

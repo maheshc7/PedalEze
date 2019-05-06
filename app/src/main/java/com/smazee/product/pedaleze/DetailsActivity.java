@@ -45,6 +45,7 @@ public class DetailsActivity extends AppCompatActivity {
         prefManager = new PrefManager(this);
         //MessageSender messageSender = new MessageSender(DetailsActivity.this);
         //messageSender.getLogin(DetailsActivity.this, prefManager.getPhoneNumber(), "test");
+        profile = ProfileActivity.profile;
         if(profile!=null){
             Log.d("Check--->",profile.toString());
             setProfile(profile);

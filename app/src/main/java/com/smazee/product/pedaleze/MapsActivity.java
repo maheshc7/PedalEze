@@ -12,6 +12,7 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -64,6 +65,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     static Intent toService;
     String bpm, phno;
     static TextView heart_rate;
+    static int selectedId;
+    final int PERMISSIONS_REQUEST_CALL=1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,8 +96,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         heart_rate.setText(bpm);
         heart_rate.setVisibility(View.INVISIBLE);
         dest_layout.setVisibility(View.INVISIBLE);
-
-
     }
 
     @Override
@@ -107,12 +108,44 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             goBtn.setText("START!");
             distTxt.setText("0.0 km");
         }
+
+
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         inBackground = true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(isTracking)
+            moveTaskToBack(true);
+        else
+            super.onBackPressed();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSIONS_REQUEST_CALL: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+                } else {
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request.
+        }
     }
 
     /**
@@ -220,7 +253,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     public void onSelection(View view) {
-        int selectedId = radioGroup.getCheckedRadioButtonId();
+        selectedId = radioGroup.getCheckedRadioButtonId();
         RadioButton mode = findViewById(selectedId);
         if (selectedId == -1) {
             Toast.makeText(MapsActivity.this, "Nothing selected", Toast.LENGTH_SHORT).show();
@@ -229,20 +262,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             dist_layout.setVisibility(View.VISIBLE);
             mode_layout.animate().translationY(-1000).alpha(0.0f).setDuration(1500);
             selection_layout.animate().translationY(-200).alpha(0.0f).setDuration(500).setStartDelay(500);
-            allset_layout.animate().alpha(1).setDuration(2000).withEndAction(new Runnable() {
+            allset_layout.animate().alpha(1).setDuration(1500).withEndAction(new Runnable() {
                 @Override
                 public void run() {
-                    allset_layout.animate().alpha(0).setDuration(2000);
-                    dist_layout.animate().translationY(goBtn.getHeight() + 40).alpha(1.0f).setDuration(2000);
-                    goBtn.animate().rotationBy(360).setDuration(2000);
+                    allset_layout.animate().alpha(0).setDuration(1500);
+                    dist_layout.animate().translationY(goBtn.getHeight() + 40).alpha(1.0f).setDuration(1000);
+                    goBtn.animate().rotationBy(360).setDuration(1000);
                 }
             });
-            set_img.animate().rotation(360).setDuration(3000);
+            set_img.animate().rotation(360).setDuration(1500);
         }
     }
 
     public void sendSOS(View view) {
-        phno = "+919543610925";
+        phno = "+91108";
         String msg="HELP! I'm in Danger!";
 
         //For Sending SOS Text
@@ -252,17 +285,31 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //For making an SOS call
         Intent call = new Intent(Intent.ACTION_CALL);
         call.setData(Uri.parse("tel:" + phno));
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
+        if (ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.CALL_PHONE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Permission is not granted
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.CALL_PHONE)) {
+                // Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+            } else {
+                // No explanation needed; request the permission
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.READ_CONTACTS},
+                        PERMISSIONS_REQUEST_CALL);
+
+                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+            }
         }
-        startActivity(call);
+        else {
+            startActivity(call);
+        }
     }
 
     public void getDest(View view){

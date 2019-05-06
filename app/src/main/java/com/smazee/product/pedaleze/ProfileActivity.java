@@ -73,6 +73,7 @@ public class ProfileActivity extends AppCompatActivity {
     TextView map_heart_rate;
     private static final long SCAN_PERIOD = 10000;
     TextView bmi_txt,height_txt,weight_txt,bmi_index,heart_rate_text,profile_name;
+    static ProfileDetails profile;
 //    private static final UUID UUID_Service = UUID.fromString("19fc95c0c11111e399040002a5d5c51b");
 //    private static final UUID UUID_characteristic = UUID.fromString("21fac9e0c11111e392460002a5d5c51b")
     BluetoothDevice esp32;
@@ -113,6 +114,7 @@ public class ProfileActivity extends AppCompatActivity {
         swipeBtn.setOnSlideCompleteListener(new SlideToActView.OnSlideCompleteListener() {
             @Override
             public void onSlideComplete(SlideToActView slideToActView) {
+                //toMap.addFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(toMap);
                 map=true;
                 swipeBtn.resetSlider();
@@ -186,6 +188,7 @@ switch (message.what){
     }
 
     public void updateView(ProfileDetails prof){
+        profile = prof;
         profile_name.setText(prof.getName());
         if(!prof.getHeigh().isEmpty() && !prof.getWeight().isEmpty()) {
             height_txt.setText(prof.getHeigh());
@@ -299,10 +302,10 @@ switch (message.what){
     public void connect(){
         Toast.makeText(getApplicationContext(), "Connecting to the Pedaleze Cycle ", Toast.LENGTH_SHORT).show();
         //    MI Band MAC
-        //    bluetoothDevice = bluetoothAdapter.getRemoteDevice("DB:A9:1E:35:1E:43");
-//        bluetoothDevice = bluetoothAdapter.getRemoteDevice("CC:50:E3:8C:FF:52"); //   MAC Address of Smazee ESP32
-//        bluetoothDevice = bluetoothAdapter.getRemoteDevice("3C:71:BF:44:71:D6"); //  MAC Address of Pedaleze Team  ESP32 - 1
-        bluetoothDevice = bluetoothAdapter.getRemoteDevice("3C:71:BF:44:71:C2"); //  MAC Address of Pedaleze Team  ESP32 - 2
+        //bluetoothDevice = bluetoothAdapter.getRemoteDevice("DB:A9:1E:35:1E:43");
+        //bluetoothDevice = bluetoothAdapter.getRemoteDevice("CC:50:E3:8C:FF:52"); //   MAC Address of Smazee ESP32
+        bluetoothDevice = bluetoothAdapter.getRemoteDevice("3C:71:BF:44:71:D6"); //  MAC Address of Pedaleze Team  ESP32 - 1
+        //bluetoothDevice = bluetoothAdapter.getRemoteDevice("3C:71:BF:44:71:C2"); //  MAC Address of Pedaleze Team  ESP32 - 2
         Log.v("test", "Connecting to " + "i6HRc Band"); // i6HRc
         //    Mi Band
         //    Log.v("test", "Connecting to " + "Mi Band");

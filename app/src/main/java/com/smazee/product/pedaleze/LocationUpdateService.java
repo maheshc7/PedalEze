@@ -196,7 +196,6 @@ public class LocationUpdateService extends Service {
             calendar = Calendar.getInstance();
             lat2 = location.getLatitude();
             lon2 = location.getLongitude();
-            Log.d("ServiceIntent--->", "Updating location...");
             if (lat1 == 0 && lon1 == 0 && mapsActivity.mMap != null) {
                 lat1 = lat2;
                 lon1 = lon2;
@@ -209,12 +208,12 @@ public class LocationUpdateService extends Service {
             if (isTracking) {
                 float dist[] = new float[3];
                 Location.distanceBetween(lat1, lon1, lat2, lon2, dist);
+                Log.d("Location--->",lat1+" "+lon1+" ~~~~ "+lat2+" "+lon2);
                 Log.d("Service-->", prevDist + "----" + dist[0]);
                 float d;
                 d=dist[0];
                 dist[0] += prevDist;
-                if (dist[0] != 0 && dist[0] > prevDist && !inBackground) {//
-                    Log.d("ServiceIn-->", prevDist + "----" + dist[0]);
+                if (dist[0] != 0 && dist[0] > prevDist && !inBackground) {
                     mapsActivity.distTxt.setText(String.format("%.2f", dist[0] / 1000) + " km");
                     /*mapsActivity.mMap.addPolyline(new PolylineOptions()
                             .add(new LatLng(prevLat, prevLong), new LatLng(lat2, lon2))
@@ -225,7 +224,7 @@ public class LocationUpdateService extends Service {
 
 
 
-                    if (mLastLocation != null) {
+                    if (d>0) {
                         calendar.setTimeInMillis(location.getTime() - time);
                         int s=calendar.get(Calendar.SECOND);
                         Log.d("Service Time--->",location.getTime()+"  "+mLastLocation.getTime()+"  "+s);
@@ -234,7 +233,7 @@ public class LocationUpdateService extends Service {
                         speed = d/s;
                     }
 
-                    if(speed*3.6<61)
+                    //if(speed*3.6<61)
                         mapsActivity.goBtn.setText(String.format("%.0f\nkmph", speed*3.6));
                     mLastLocation = location;
                     time=mLastLocation.getTime();
