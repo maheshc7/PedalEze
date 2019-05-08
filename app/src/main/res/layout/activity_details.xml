@@ -71,7 +71,7 @@
             android:layout_width="wrap_content"
             android:layout_height="27dp"
             android:layout_marginStart="28dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="12dp"
             android:text="Hip Waist ratio"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -82,7 +82,7 @@
             android:layout_width="wrap_content"
             android:layout_height="27dp"
             android:layout_marginStart="100dp"
-            android:layout_marginTop="68dp"
+            android:layout_marginTop="80dp"
             android:text="D.O.B"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -92,7 +92,7 @@
             android:id="@+id/gender"
             android:layout_width="wrap_content"
             android:layout_height="27dp"
-            android:layout_marginStart="84dp"
+            android:layout_marginStart="88dp"
             android:layout_marginTop="20dp"
             android:text="Gender"
             android:textSize="18sp"
@@ -125,16 +125,56 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/sos_txt" />
+            app:layout_constraintTop_toBottomOf="@+id/sos_txt"
+            tools:visibility="invisible" />
+
+        <Button
+            android:id="@+id/cancel_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/gradient"
+            android:onClick="onCancel"
+            android:text="@android:string/cancel"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.214"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sos_txt"
+            tools:visibility="invisible" />
+
+        <Button
+            android:id="@+id/save_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/gradient"
+            android:onClick="onProceed"
+            android:text="Save"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.791"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sos_txt"
+            tools:visibility="invisible" />
 
         <EditText
             android:id="@+id/height_txt"
-            android:layout_width="50dp"
+            android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:ems="10"
+            android:hint="cm"
             android:inputType="number"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -144,11 +184,12 @@
 
         <EditText
             android:id="@+id/weight_txt"
-            android:layout_width="50dp"
+            android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:ems="10"
+            android:hint="kg"
             android:inputType="number"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -160,9 +201,9 @@
             android:id="@+id/radioGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="12dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.438"
+            app:layout_constraintHorizontal_bias="0.505"
             app:layout_constraintStart_toEndOf="@+id/gender"
             app:layout_constraintTop_toBottomOf="@+id/weight_txt">
 
@@ -208,15 +249,15 @@
 
         <EditText
             android:id="@+id/dob_txt"
-            android:layout_width="160dp"
-            android:layout_height="wrap_content"
+            android:layout_width="114dp"
+            android:layout_height="41dp"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:ems="10"
             android:hint="yyyy-mm-dd"
             android:inputType="date"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.444"
+            app:layout_constraintHorizontal_bias="0.301"
             app:layout_constraintStart_toEndOf="@+id/dob"
             app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
 
@@ -224,10 +265,14 @@
             android:id="@+id/hip_txt"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="48dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             android:ems="10"
+            android:hint="in"
             android:inputType="number"
             android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.2"
             app:layout_constraintStart_toEndOf="@+id/hw_ratio"
             app:layout_constraintTop_toBottomOf="@+id/dob_txt" />
 
@@ -236,32 +281,34 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginEnd="36dp"
+            android:layout_marginEnd="72dp"
             android:ems="10"
+            android:hint="in"
             android:inputType="number"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.208"
+            app:layout_constraintHorizontal_bias="0.684"
             app:layout_constraintStart_toEndOf="@+id/hip_txt"
             app:layout_constraintTop_toBottomOf="@+id/dob_txt" />
 
         <EditText
             android:id="@+id/wrist_size_txt"
-            android:layout_width="96dp"
+            android:layout_width="49dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="8dp"
             android:layout_marginEnd="16dp"
             android:ems="10"
+            android:hint="in"
             android:inputType="number"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.226"
+            app:layout_constraintHorizontal_bias="0.208"
             app:layout_constraintStart_toEndOf="@+id/Wrist_size"
             app:layout_constraintTop_toBottomOf="@+id/hip_txt" />
 
         <EditText
             android:id="@+id/sos_txt"
-            android:layout_width="162dp"
+            android:layout_width="135dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="8dp"
@@ -269,7 +316,7 @@
             android:inputType="number"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.407"
+            app:layout_constraintHorizontal_bias="0.314"
             app:layout_constraintStart_toEndOf="@+id/sos"
             app:layout_constraintTop_toBottomOf="@+id/wrist_size_txt" />
 
@@ -277,13 +324,29 @@
             android:id="@+id/textView10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="8dp"
             android:text=":"
             android:textSize="18sp"
             app:layout_constraintEnd_toStartOf="@+id/waist_txt"
             app:layout_constraintStart_toEndOf="@+id/hip_txt"
             app:layout_constraintTop_toBottomOf="@+id/dob_txt" />
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/arrow_white"
+            android:onClick="selectDate"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.242"
+            app:layout_constraintStart_toEndOf="@+id/dob_txt"
+            app:layout_constraintTop_toBottomOf="@+id/radioGroup"
+            app:srcCompat="@android:drawable/ic_menu_my_calendar" />
+
     </android.support.constraint.ConstraintLayout>
 </android.support.constraint.ConstraintLayout>

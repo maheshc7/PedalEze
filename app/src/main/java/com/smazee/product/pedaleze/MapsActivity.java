@@ -2,10 +2,13 @@ package com.smazee.product.pedaleze;
 
 import android.Manifest;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.constraint.ConstraintLayout;
@@ -25,6 +28,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -56,7 +60,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     static double lon1 = 0, lon2 = 0, lat1 = 0, lat2 = 0;
     Polyline polyline;
     List<Polyline> polylineList;
-    //LocationManager locationManager;
+    LocationManager locationManager;
     TextView distTxt, destText;
     public static boolean isTracking = false, inBackground = false, destVisible = false;
     Button goBtn, destBtn, sosBtn;
@@ -161,7 +165,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         // Add a marker in Sydney and move the camera
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
             // here to request the missing permissions, and then overriding
@@ -169,14 +173,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             //                                          int[] grantResults)
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
-            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION}, 101);
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 101);
             Log.d("MapActivity-->", "Give Permission");
             return;
         }
 
         mMap.setMyLocationEnabled(true);
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
-        mMap.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(22.2695345, 75.7330751)));
+
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
+        /*LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        Criteria criteria = new Criteria();
+        Location location = locationManager.getLastKnownLocation(locationManager.getBestProvider(criteria,false));
+        LatLng latLng = new LatLng(location.getLatitude(),location.getLongitude());
+        //mMap.animateCamera(CameraUpdateFactory.newLatLng(chennai));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,12));*/
         /*locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         try {
             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 2000, 20, MapsActivity.this);
@@ -190,6 +202,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onLocationChanged(Location location) {
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(),location.getLongitude()),12));
+        locationManager.removeUpdates(this);
 
         /*lat2 = location.getLatitude();
         lon2 = location.getLongitude();

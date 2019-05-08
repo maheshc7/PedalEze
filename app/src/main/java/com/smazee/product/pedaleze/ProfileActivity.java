@@ -207,6 +207,7 @@ switch (message.what){
 
     public void editProfile(View view){
         Intent toDetails = new Intent(ProfileActivity.this,DetailsActivity.class);
+        toDetails.putExtra("dest","profile");
         startActivity(toDetails);
     }
 
