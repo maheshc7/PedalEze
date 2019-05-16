@@ -19,6 +19,7 @@ import android.support.v4.content.ContextCompat;
 import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -101,6 +102,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         heart_rate.setVisibility(View.INVISIBLE);
         dest_layout.setVisibility(View.INVISIBLE);
     }
+
 
     @Override
     protected void onResume() {

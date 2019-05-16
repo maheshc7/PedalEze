@@ -13,9 +13,13 @@ public class LoginResponse extends MessengerResponse{
 
     public ProfileDetails getProfileDetails() throws JSONException {
         ProfileDetails profileDetail = new ProfileDetails();
-        int token = successList.get("token").getAsInt();
 
-        JSONObject user = new JSONObject(successList.get("user").toString());
+        JSONObject user=new JSONObject(successList.toString());
+        if(successList.has("user")) {
+            user = new JSONObject(successList.get("user").toString());
+            int token = successList.get("token").getAsInt();
+            profileDetail.setToken(token);
+        }
         int id = user.getInt("id");
         String created_at = user.getString("created_at");
         String name = user.getString("name");
@@ -25,11 +29,11 @@ public class LoginResponse extends MessengerResponse{
         String weight = user.getString("weight");
         String hip_size = user.getString("hip_size");
         String wrist_size = user.getString("wrist_size");
-        String gender = user.getString("gender");
+        int gender = user.getInt("gender");
         String sos = user.getString("sos_number");
         String dob = user.getString("dob");
 
-        profileDetail.setToken(token);
+
         profileDetail.setId(id);
         profileDetail.setApp_token(app_token);
         profileDetail.setName(name);
@@ -39,8 +43,7 @@ public class LoginResponse extends MessengerResponse{
         profileDetail.setHeigh(height);
         profileDetail.setHip_size(hip_size);
         profileDetail.setWrist_size(wrist_size);
-        if(gender.isEmpty())
-            profileDetail.setGender(Integer.parseInt(gender));
+        profileDetail.setGender(gender);
         profileDetail.setSos_number(sos);
         profileDetail.setDob(dob);
 

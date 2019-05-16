@@ -85,15 +85,22 @@ public class DetailsActivity extends AppCompatActivity {
         wrist_txt.setText(profile.getWrist_size());
         sos_txt.setText(profile.getSos_number());
         dob_txt.setText(profile.getDob());
-        if(profile.getGender()==1)
+        if(profile.getGender()==1) {
             m.setSelected(true);
-        else if(profile.getGender()==2)
+            m.setChecked(true);
+        }
+        else if(profile.getGender()==2) {
             f.setSelected(true);
-        else
+            f.setChecked(true);
+        }
+        else {
             o.setSelected(true);
+            o.setChecked(true);
+        }
         String[] hw = profile.getHip_size().split(":");
         hip_txt.setText(hw[0]);
         waist_txt.setText(hw[1]);
+
 
     }
 
@@ -168,6 +175,11 @@ public class DetailsActivity extends AppCompatActivity {
 
     public void onCancel(View view){
         super.onBackPressed();
+    }
+
+    @Override
+    public void onBackPressed() {
+        //do nothing...
     }
 
     public void selectDate(View view){

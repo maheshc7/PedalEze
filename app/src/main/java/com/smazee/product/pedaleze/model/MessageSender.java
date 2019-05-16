@@ -45,7 +45,7 @@ public class MessageSender {
         call.enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                Log.d(TAG, "Response Code is " + String.valueOf(response.code()));
+                Log.d(TAG, "Response Code is " + response.code());
                 Log.d(TAG, "GetLogin method called");
 
                 boolean isSuccess = response.isSuccessful();
@@ -60,9 +60,11 @@ public class MessageSender {
                         }
                         else {
                             loginActivity.intent(true);
+                            ProfileActivity.profile = response.body().getProfileDetails();
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
+                        Log.e(TAG,"getLogin LoginActivity error");
                     }
                 }
             }
@@ -122,7 +124,7 @@ public class MessageSender {
         call.enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                Log.d(TAG, "Response Code is " + String.valueOf(response.code()));
+                Log.d(TAG, "Response Code is " + response.code());
                 Log.d(TAG, "GetLogin method called");
 
                 boolean isSuccess = response.isSuccessful();
@@ -134,6 +136,7 @@ public class MessageSender {
 
                     } catch (JSONException e) {
                         e.printStackTrace();
+                        Log.e(TAG,"getLogin ProfileActivity error");
                     }
                 }
             }
@@ -157,13 +160,19 @@ public class MessageSender {
         call.enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                Log.d(TAG, "Response Code is " + String.valueOf(response.code()));
+                Log.d(TAG, "Response Code is " + response.code());
                 Log.d(TAG, "updateDetails method called");
 
                 boolean isSuccess = response.isSuccessful();
 
                 if(isSuccess) {
                     Log.d(TAG, "Success response:\n"+response.body().toString());
+                    try {
+                        ProfileActivity.profile = response.body().getProfileDetails();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        Log.e(TAG,"updateDetails Profile error");
+                    }
                 }
             }
 

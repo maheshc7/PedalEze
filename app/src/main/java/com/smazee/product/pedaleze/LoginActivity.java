@@ -251,11 +251,11 @@ public class LoginActivity extends AppCompatActivity implements VerificationList
     public void intent(boolean fill){
         if(fill){
             Intent toProfile = new Intent(LoginActivity.this,ProfileActivity.class);
-            toProfile.putExtra("dest","login");
             startActivity(toProfile);
         }
         else{
             Intent toDetails = new Intent(LoginActivity.this,DetailsActivity.class);
+            toDetails.putExtra("dest","login");
             startActivity(toDetails);
         }
     }

@@ -73,7 +73,7 @@ public class ProfileActivity extends AppCompatActivity {
     TextView map_heart_rate;
     private static final long SCAN_PERIOD = 10000;
     TextView bmi_txt,height_txt,weight_txt,bmi_index,heart_rate_text,profile_name;
-    static ProfileDetails profile;
+     public static ProfileDetails profile;
 //    private static final UUID UUID_Service = UUID.fromString("19fc95c0c11111e399040002a5d5c51b");
 //    private static final UUID UUID_characteristic = UUID.fromString("21fac9e0c11111e392460002a5d5c51b")
     BluetoothDevice esp32;
@@ -175,14 +175,14 @@ public class ProfileActivity extends AppCompatActivity {
         mhandler = new Handler(Looper.getMainLooper()) {
             @Override
             public void handleMessage(Message message) {
-switch (message.what){
-    case 0:Toast.makeText(getApplicationContext(), "Cycle is Connected with the App !", Toast.LENGTH_SHORT).show(); break;
-    case 1:Toast.makeText(getApplicationContext(), "Cycle Device got Disconnected with the App !", Toast.LENGTH_SHORT).show();break;
-    case 2:Toast.makeText(getApplicationContext(), "Band is Connected with the App !", Toast.LENGTH_SHORT).show();break;
-    case 3:Toast.makeText(getApplicationContext(), "Band got Disconnected with the App !", Toast.LENGTH_SHORT).show();break;
-    default: Toast.makeText(getApplicationContext(), "Pedaleze | v0.1 | Alpha Demo ", Toast.LENGTH_SHORT).show();break;
+                switch (message.what){
+                    case 0:Toast.makeText(getApplicationContext(), "Cycle is Connected with the App !", Toast.LENGTH_SHORT).show(); break;
+                    case 1:Toast.makeText(getApplicationContext(), "Cycle Device got Disconnected with the App !", Toast.LENGTH_SHORT).show();break;
+                    case 2:Toast.makeText(getApplicationContext(), "Band is Connected with the App !", Toast.LENGTH_SHORT).show();break;
+                    case 3:Toast.makeText(getApplicationContext(), "Band got Disconnected with the App !", Toast.LENGTH_SHORT).show();break;
+                    default: Toast.makeText(getApplicationContext(), "Pedaleze | v0.1 | Alpha Demo ", Toast.LENGTH_SHORT).show();break;
 
-}
+                }
             }
         };
     }
@@ -287,7 +287,8 @@ switch (message.what){
     public void sendDatatoHardware(String arr , int mode){
         bservice = bluetoothGatt.getService(tempDatasend);
         bcharacterstic = bservice.getCharacteristic(RXUUID);
-        String data = arr+","+mode;
+        String data = arr+","+mode; //dummy values added
+        Log.d("Sending Data-->",data);
         bcharacterstic.setValue(data);
         bluetoothGatt.writeCharacteristic(bcharacterstic);
     }
@@ -304,8 +305,8 @@ switch (message.what){
         Toast.makeText(getApplicationContext(), "Connecting to the Pedaleze Cycle ", Toast.LENGTH_SHORT).show();
         //    MI Band MAC
         //bluetoothDevice = bluetoothAdapter.getRemoteDevice("DB:A9:1E:35:1E:43");
-        //bluetoothDevice = bluetoothAdapter.getRemoteDevice("CC:50:E3:8C:FF:52"); //   MAC Address of Smazee ESP32
-        bluetoothDevice = bluetoothAdapter.getRemoteDevice("3C:71:BF:44:71:D6"); //  MAC Address of Pedaleze Team  ESP32 - 1
+        bluetoothDevice = bluetoothAdapter.getRemoteDevice("CC:50:E3:8C:FF:52"); //   MAC Address of Smazee ESP32
+        //bluetoothDevice = bluetoothAdapter.getRemoteDevice("3C:71:BF:44:71:D6"); //  MAC Address of Pedaleze Team  ESP32 - 1
         //bluetoothDevice = bluetoothAdapter.getRemoteDevice("3C:71:BF:44:71:C2"); //  MAC Address of Pedaleze Team  ESP32 - 2
         Log.v("test", "Connecting to " + "i6HRc Band"); // i6HRc
         //    Mi Band
@@ -319,9 +320,11 @@ switch (message.what){
     }
 
     public void connect_band(){
+        TextView macTxt = findViewById(R.id.mac);
+        String mac = macTxt.getText().toString();
         Toast.makeText(getApplicationContext(), "Connecting to the Band", Toast.LENGTH_SHORT).show();
 //        banddevice = bluetoothAdapter.getRemoteDevice("F9:2D:2A:50:B9:EC"); DB:A9:1E:35:1E:43
-        banddevice = bluetoothAdapter.getRemoteDevice("F9:2D:2A:50:B9:EC");
+        banddevice = bluetoothAdapter.getRemoteDevice(mac);//F9:2D:2A:50:B9:EC
         Log.v("test", "Connecting to " + "i6HRc Band"); // i6HRc
         Log.v("test", "Device name " + banddevice.getName());
         Bandgatt = banddevice.connectGatt(getApplicationContext(),true,bluetoothGattCallback);
@@ -357,7 +360,7 @@ switch (message.what){
         isListeningHeartRate = true;
     }
 
-    void bandConnected(UUID temp2){
+    void bandConnected(UUID temp2, BluetoothGattService bs){
         Log.v("gg","fdasdfads");
         bandservice = Bandgatt.getService(temp2);
         if(bservice == null){
@@ -377,6 +380,18 @@ switch (message.what){
 
             }
         }
+        bandcharacterstic = bs.getCharacteristic(CustomBluetoothProfile.HeartRate.measurementCharacteristic);
+        if(bandcharacterstic == null){
+            Log.v("Status of Bcharactersti","Characterstic not Working");
+        }else {
+            Log.v("Status of Bcharactersti", "Characterstic Working");
+            Bandgatt.setCharacteristicNotification(bandcharacterstic, true);
+            BluetoothGattDescriptor descriptor = bandcharacterstic.getDescriptor(CustomBluetoothProfile.HeartRate.descriptor);
+            descriptor.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
+            Bandgatt.writeDescriptor(descriptor);
+            isListeningHeartRate = true;
+        }
+
     }
 
     void getBatteryStatus() {
@@ -446,12 +461,13 @@ switch (message.what){
                         Log.v("uuid check","not working");
                     }else
                     {
-                        Log.v("uuid check","working");
+                        Log.v("uuid check","working"+bservice1.toString());
+
                         Log.v("uuid temp",temp.toString());
                         Log.v("uuid temddp",CustomBluetoothProfile.HeartRate.service.toString());
                         if(temp.toString().equals(CustomBluetoothProfile.HeartRate.service.toString())){
 
-                            bandConnected(temp);
+                            bandConnected(temp,bservice1);
                         }
                     }
                 }
@@ -496,9 +512,11 @@ switch (message.what){
              public void run() {
                String  arr;
                  Log.v("testofsendingdata","done");
-               arr = data[1]+"";
+                 arr = data[1]+"";
+                 String arrr = Arrays.toString(data);
                  heart_rate_text.setText(arr);
-                    sendDatatoHardware(arr,mode_val);
+                 if(arr.length()>10)
+                    sendDatatoHardware(arrr,mode_val);
                  if(esp32GattCharacteristic!=null){
                      Log.v("testofsendingdata","done");
                      esp32GattCharacteristic.setValue("Smazee,a,creative,haven");
