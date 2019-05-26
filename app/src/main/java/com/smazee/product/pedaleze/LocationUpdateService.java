@@ -206,7 +206,7 @@ public class LocationUpdateService extends Service {
                 mapsActivity.mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,17.0f));
             }
             if (isTracking) {
-                float dist[] = new float[3];
+                float[] dist = new float[3];
                 Location.distanceBetween(lat1, lon1, lat2, lon2, dist);
                 Log.d("Location--->",lat1+" "+lon1+" ~~~~ "+lat2+" "+lon2);
                 Log.d("Service-->", prevDist + "----" + dist[0]);
@@ -229,12 +229,12 @@ public class LocationUpdateService extends Service {
                         int s=calendar.get(Calendar.SECOND);
                         Log.d("Service Time--->",location.getTime()+"  "+mLastLocation.getTime()+"  "+s);
                         speed = Math.sqrt(Math.pow(lon2 - lon1, 2) + Math.pow(lat2 - lat1, 2));
-                        Log.d("Speed(dist)-->", String.valueOf(speed)+"/"+(s));
+                        Log.d("Speed(dist)-->", speed +"/"+(s));
                         speed = d/s;
                     }
 
                     //if(speed*3.6<61)
-                        mapsActivity.goBtn.setText(String.format("%.0f\nkmph", speed*3.6));
+                        MapsActivity.heart_rate.setText(String.format("%.0f", speed*3.6));
                     mLastLocation = location;
                     time=mLastLocation.getTime();
                     lat1 = lat2;

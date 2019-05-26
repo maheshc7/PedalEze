@@ -216,7 +216,7 @@
                     app:layout_constraintStart_toEndOf="@+id/divider4" />
 
                 <TextView
-                    android:id="@+id/kilometer3"
+                    android:id="@+id/map_dist"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -241,10 +241,10 @@
                     android:text="kms"
                     android:textSize="12sp"
                     app:layout_constraintBottom_toTopOf="@+id/map_dist_img"
-                    app:layout_constraintEnd_toEndOf="@+id/kilometer3"
+                    app:layout_constraintEnd_toEndOf="@+id/map_dist"
                     app:layout_constraintHorizontal_bias="0.444"
-                    app:layout_constraintStart_toStartOf="@+id/kilometer3"
-                    app:layout_constraintTop_toBottomOf="@+id/kilometer3" />
+                    app:layout_constraintStart_toStartOf="@+id/map_dist"
+                    app:layout_constraintTop_toBottomOf="@+id/map_dist" />
 
                 <ImageView
                     android:id="@+id/map_calories_img"
@@ -482,6 +482,7 @@
                         android:layout_margin="5sp"
                         android:buttonTint="@color/colorAccent"
                         android:onClick="onSelection"
+                        android:tag="1"
                         android:text="Manual Assist" />
 
                     <RadioButton
@@ -491,6 +492,7 @@
                         android:layout_margin="5sp"
                         android:buttonTint="@color/colorAccent"
                         android:onClick="onSelection"
+                        android:tag="2"
                         android:text="Relaxed" />
 
                     <RadioButton
@@ -500,6 +502,7 @@
                         android:layout_margin="5sp"
                         android:buttonTint="@color/colorAccent"
                         android:onClick="onSelection"
+                        android:tag="3"
                         android:text="Fitness" />
                 </RadioGroup>
             </LinearLayout>
@@ -530,6 +533,65 @@
 
             </LinearLayout>
         </android.support.constraint.ConstraintLayout>
+
+        <LinearLayout
+            android:id="@+id/assist_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/profile_card_view"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/select_mode_layout"
+            tools:visibility="invisible">
+
+            <RadioGroup
+                android:id="@+id/assist_group"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/eco"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="assistSelection"
+                    android:tag="1"
+                    android:text="Eco" />
+
+                <RadioButton
+                    android:id="@+id/tour"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="assistSelection"
+                    android:tag="2"
+                    android:text="Tour" />
+
+                <RadioButton
+                    android:id="@+id/speed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="assistSelection"
+                    android:tag="3"
+                    android:text="Speed" />
+
+                <RadioButton
+                    android:id="@+id/turbo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="assistSelection"
+                    android:tag="4"
+                    android:text="Turbo" />
+            </RadioGroup>
+
+        </LinearLayout>
 
     </android.support.constraint.ConstraintLayout>
 

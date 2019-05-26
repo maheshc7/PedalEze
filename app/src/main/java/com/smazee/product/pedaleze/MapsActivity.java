@@ -56,7 +56,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     protected GoogleMap mMap;
     ConstraintLayout dist_layout, allset_layout;
-    LinearLayout mode_layout, selection_layout, dest_layout;
+    LinearLayout mode_layout, selection_layout, dest_layout, assist_layout;
     ImageView set_img;
     static double lon1 = 0, lon2 = 0, lat1 = 0, lat2 = 0;
     Polyline polyline;
@@ -64,12 +64,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     LocationManager locationManager;
     TextView distTxt, destText;
     public static boolean isTracking = false, inBackground = false, destVisible = false;
-    Button goBtn, destBtn, sosBtn;
+    Button destBtn, sosBtn;
     RadioGroup radioGroup;
     static float prevDist = 0;
     static Intent toService;
     String bpm, phno;
-    static TextView heart_rate;
+    static TextView heart_rate, heart_txt, dist_txt;
+    static Button goBtn;
     static int selectedId;
     final int PERMISSIONS_REQUEST_CALL=1;
 
@@ -95,12 +96,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         heart_rate = findViewById(R.id.heart_rate_map);
         radioGroup = findViewById(R.id.mode_group);
         set_img = findViewById(R.id.set_img);
+        heart_txt = findViewById(R.id.map_heart);
+        dist_txt = findViewById(R.id.map_dist);
         Intent intent = getIntent();
         bpm = intent.getStringExtra("bpm");
         phno = intent.getStringExtra("phno");
         heart_rate.setText(bpm);
         heart_rate.setVisibility(View.INVISIBLE);
         dest_layout.setVisibility(View.INVISIBLE);
+        assist_layout = findViewById(R.id.assist_layout);
+        assist_layout.setVisibility(View.INVISIBLE);
     }
 
 
@@ -239,8 +244,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Log.d("MapActivity-->", "Please enable " + provider);
     }
 
-    public static void update(String bpm) {
-        heart_rate.setText(bpm + " bpm");
+    public static void update(String []values) {
+        //heart_rate.setText(values[0] + " bpm");
+        heart_txt.setText(values[0]);
+        goBtn.setText(values[1]+"\nKMPH");
+        dist_txt.setText(values[2]);
     }
 
     public void startTrack(View view) {
@@ -274,6 +282,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if (selectedId == -1) {
             Toast.makeText(MapsActivity.this, "Nothing selected", Toast.LENGTH_SHORT).show();
         } else {
+            RadioButton modeRadio = findViewById(selectedId);
+            ProfileActivity.mode_val = Integer.parseInt(modeRadio.getTag().toString());
+            if(ProfileActivity.mode_val == 1){
+                assist_layout.setVisibility(View.VISIBLE);
+            }
             Toast.makeText(MapsActivity.this, mode.getText() + " Mode ON!", Toast.LENGTH_SHORT).show();
             dist_layout.setVisibility(View.VISIBLE);
             mode_layout.animate().translationY(-1000).alpha(0.0f).setDuration(1500);
@@ -288,6 +301,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             });
             set_img.animate().rotation(360).setDuration(1500);
         }
+    }
+
+    public void assistSelection(View view){
+        RadioGroup assist_group = findViewById(R.id.assist_group);
+        int assist_id = assist_group.getCheckedRadioButtonId();
+        RadioButton assist_rb = findViewById(assist_id);
+        ProfileActivity.assist_lvl = Integer.parseInt(assist_rb.getTag().toString());
+        assist_layout.setVisibility(View.INVISIBLE);
     }
 
     public void sendSOS(View view) {

@@ -42,7 +42,14 @@ import com.smazee.product.pedaleze.model.ProfileDetails;
 
 import java.io.IOException;
 import java.lang.reflect.Array;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -77,7 +84,8 @@ public class ProfileActivity extends AppCompatActivity {
 //    private static final UUID UUID_Service = UUID.fromString("19fc95c0c11111e399040002a5d5c51b");
 //    private static final UUID UUID_characteristic = UUID.fromString("21fac9e0c11111e392460002a5d5c51b")
     BluetoothDevice esp32;
-    public static int mode_val = 0;
+    public static int mode_val = 0, assist_lvl = 0;
+    double mhr = 0,ll,ul;
     public static int band_status = 0;
     BluetoothGatt esp32Gatt;
     BluetoothGattCharacteristic esp32GattCharacteristic;
@@ -193,14 +201,61 @@ public class ProfileActivity extends AppCompatActivity {
         if(!prof.getHeigh().isEmpty() && !prof.getWeight().isEmpty()) {
             height_txt.setText(prof.getHeigh());
             weight_txt.setText(prof.getWeight());
-            int bmi = (int) (Integer.parseInt(prof.getWeight()) / (Math.pow(Double.parseDouble(prof.getHeigh()) / 100, 2)));
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date bday = null;
+            int age;
+            try {
+                bday = dateFormat.parse(prof.getDob());
+                Calendar dob = Calendar.getInstance();
+                Calendar now = Calendar.getInstance();
+                dob.setTime(bday);
+                if (dob.after(now)) {
+                    throw new IllegalArgumentException("Can't be born in the future");
+                }
+                int year1 = now.get(Calendar.YEAR);
+                int year2 = dob.get(Calendar.YEAR);
+                age = year1 - year2;
+                int month1 = now.get(Calendar.MONTH);
+                int month2 = dob.get(Calendar.MONTH);
+                if (month2 > month1) {
+                    age--;
+                }
+                else if (month1 == month2) {
+                    int day1 = now.get(Calendar.DAY_OF_MONTH);
+                    int day2 = dob.get(Calendar.DAY_OF_MONTH);
+                    if (day2 > day1) {
+                        age--;
+                    }
+                }
+
+                mhr = 208 - (.7 * age);
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            double bmi = (Double.parseDouble(prof.getWeight()) / (Math.pow(Double.parseDouble(prof.getHeigh()) / 100, 2)));
+            bmi = Math.round(bmi*10)/10.0;
             bmi_txt.setText(Double.toString(bmi));
-            if (bmi <= 18)
-                bmi_index.setText("Underweight");
-            else if (bmi >= 25)
-                bmi_index.setText("Overweight");
-            else
+            if (bmi < 18.5) {
+                bmi_index.setText("Under weight");
+                ll = .5 * mhr;
+                ul = .7 * mhr;
+            }
+            else if (bmi <= 22.9) {
                 bmi_index.setText("Normal");
+                ll = .7 * mhr;
+                ul = .9 * mhr;
+            }
+            else if (bmi <= 27.4) {
+                bmi_index.setText("Over weight");
+                ll = .6 * mhr;
+                ul = .8 * mhr;
+            }
+            else {
+                bmi_index.setText("Obese");
+                ll = .6 * mhr;
+                ul = .75 * mhr;
+            }
         }
         toMap.putExtra("phno",prof.getSos_number());
     }
@@ -287,7 +342,8 @@ public class ProfileActivity extends AppCompatActivity {
     public void sendDatatoHardware(String arr , int mode){
         bservice = bluetoothGatt.getService(tempDatasend);
         bcharacterstic = bservice.getCharacteristic(RXUUID);
-        String data = arr+","+mode; //dummy values added
+        //String data = arr+","+mode; //dummy values added
+        String data = "[5,"+arr+","+mode_val+","+ul+","+ll+","+assist_lvl+"]";
         Log.d("Sending Data-->",data);
         bcharacterstic.setValue(data);
         bluetoothGatt.writeCharacteristic(bcharacterstic);
@@ -512,11 +568,18 @@ public class ProfileActivity extends AppCompatActivity {
              public void run() {
                String  arr;
                  Log.v("testofsendingdata","done");
-                 arr = data[1]+"";
-                 String arrr = Arrays.toString(data);
+                 arr ="";
+                 //String dataToHardware = "[5,"+arr+","+mode_val+",.8,.2,"+assist_lvl+"]";
+                 for(byte i : data){
+                     arr+=(char)i;
+                 }
+                 String []values = arr.split(",");
+                 arr=values[0];
+
+                 Log.d("Values-->",arr+" speed:"+ values[1]+" dist:"+ values[2]);
                  heart_rate_text.setText(arr);
-                 if(arr.length()>10)
-                    sendDatatoHardware(arrr,mode_val);
+
+                 sendDatatoHardware(arr,mode_val);
                  if(esp32GattCharacteristic!=null){
                      Log.v("testofsendingdata","done");
                      esp32GattCharacteristic.setValue("Smazee,a,creative,haven");
@@ -526,7 +589,7 @@ public class ProfileActivity extends AppCompatActivity {
                  toMap.putExtra("bpm","dd");
 //                    mapsActivity.heart_rate.setText(arr);
                  if(map) {
-                     MapsActivity.update(arr);
+                     MapsActivity.update(values);
 
                  }
 //                 Toast.makeText(getApplicationContext(), Arrays.toString(data), Toast.LENGTH_SHORT).show();
