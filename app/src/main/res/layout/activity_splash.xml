@@ -4,40 +4,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/on_boarding_bg"
     tools:showIn="@layout/activity_splash">
-
 
     <android.support.v4.view.ViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:alpha="1"
+        android:background="@drawable/intor_screen_card" />
 
     <LinearLayout
-        android:paddingLeft="50dp"
-
         android:id="@+id/layoutDots"
+
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="35dp"
         android:gravity="left"
-        android:orientation="horizontal"></LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:alpha=".5"
-        android:layout_above="@id/layoutDots"
-        android:background="@android:color/white" />
+        android:orientation="horizontal"
+        android:paddingLeft="50dp"></LinearLayout>
 
     <ImageButton
         android:id="@+id/btn_next"
         android:layout_width="88dp"
-        android:background="@drawable/arrow"
         android:layout_height="88dp"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/arrow"
 
         android:textColor="@android:color/white" />
 
@@ -52,14 +48,16 @@
         android:background="@drawable/gradient"
         android:text="LET'S PEDALEZE"
         android:textColor="#fff" />
+
+
     <!--<Button-->
-        <!--android:id="@+id/btn_skip"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignParentBottom="true"-->
-        <!--android:layout_alignParentLeft="true"-->
-        <!--android:background="@null"-->
-        <!--android:text="@string/skip"-->
-        <!--android:textColor="@android:color/white" />-->
+    <!--android:id="@+id/btn_skip"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_alignParentBottom="true"-->
+    <!--android:layout_alignParentLeft="true"-->
+    <!--android:background="@null"-->
+    <!--android:text="@string/skip"-->
+    <!--android:textColor="@android:color/white" />-->
 
 </RelativeLayout>

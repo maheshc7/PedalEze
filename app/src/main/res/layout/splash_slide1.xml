@@ -3,57 +3,33 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/on_boarding_bg"
-    >
+    android:layout_height="match_parent">
 
 
     <ImageView
+        android:id="@+id/imageView4"
         android:layout_width="250dp"
         android:layout_height="200dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="60dp"
         android:src="@drawable/splashscreen1"
-        app:layout_constraintBottom_toTopOf="@+id/card_view"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:id="@+id/card_view"
-        android:paddingTop="20dp"
-        android:paddingLeft="45dp"
-        android:paddingRight="20dp"
+    <TextView
+        android:layout_width="310dp"
+        android:layout_height="100dp"
+
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="Connect your registered phone to Pedaleze"
+        android:textColor="#969898"
+        android:textSize="28dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_width="match_parent"
-        android:layout_height="350dp"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/intor_screen_card"
-        android:elevation="5dp"
-        android:translationZ="4dp">
-        <TextView
-            android:layout_marginTop="50dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/imageView4" />
 
-            android:textSize="28dp"
-            android:text="Connect your registered phone to Pedaleze"
-            android:textColor="#969898"/>
-
-        <LinearLayout
-            android:layout_marginTop="25dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent">
-
-            <!--<ImageView-->
-                <!--android:layout_width="88dp"-->
-                <!--android:background="@drawable/arrow"-->
-                <!--android:layout_height="88dp" />-->
-
-        </LinearLayout>
-    </LinearLayout>
 </android.support.constraint.ConstraintLayout>

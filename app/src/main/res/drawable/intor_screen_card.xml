@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
     <solid android:color="#ffffffff" />
@@ -7,4 +8,20 @@
         android:bottomRightRadius="0.0dip"
         android:topLeftRadius="70.0dip"
         android:topRightRadius="0.0dip" />
-</shape>
+</shape>-->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item
+        android:top="300sp">
+        <shape android:shape="rectangle">
+            <corners
+                android:bottomLeftRadius="0.0dip"
+                android:bottomRightRadius="0.0dip"
+                android:topLeftRadius="70.0dip"
+                android:topRightRadius="0.0dip" />
+
+            <solid
+                android:color="#ffffffff" />
+
+        </shape>
+    </item>
+</layer-list>

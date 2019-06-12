@@ -47,11 +47,32 @@ public class LocationUpdateService extends Service {
     private static final String TAG_FOREGROUND_SERVICE = "FOREGROUND_SERVICE";
     static Notification notification;
     int numMessages;
+    NotificationManager mNotificationManager;
+    NotificationCompat.Builder mNotifyBuilder;
     Location mLastLocation;
     long time=0;
     Calendar calendar;
     String NOTIFICATION_CHANNEL_ID = "com.smazee.product.pedaleze";
     NotificationManager manager;
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        final LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        this.locationListener = new MyLocationListener();
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 2000, 0, this.locationListener);
+
+    }
 
     public LocationUpdateService(){}
 
@@ -68,25 +89,36 @@ public class LocationUpdateService extends Service {
 
     @Override
     public int onStartCommand(final Intent intent, final int flags, final int startId) {
+        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
+            Notification.Builder builder = new Notification.Builder(this, NOTIFICATION_CHANNEL_ID)
+                    .setContentTitle(getString(R.string.app_name))
+                    .setContentText("Location Updates: Open App")
+                    .setAutoCancel(true);
+
+            Notification notification = builder.build();
+            startForeground(1, notification);
+
+        }
+        else*/
+            startForegroundService();
         Log.d("ServiceIntent--->","onStartCommand called");
-        startForegroundService();
         super.onStartCommand(intent, flags, startId);
         return Service.START_STICKY;
     }
 
     private void startForegroundService() {
         Log.d(TAG_FOREGROUND_SERVICE, "Start foreground service.");
-        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             String channelName = "My Background Service";
-            NotificationChannel chan = new NotificationChannel(NOTIFICATION_CHANNEL_ID, channelName, NotificationManager.IMPORTANCE_HIGH);
+            NotificationChannel chan = new NotificationChannel(NOTIFICATION_CHANNEL_ID, channelName, NotificationManager.IMPORTANCE_DEFAULT);
             chan.setLightColor(Color.BLUE);
-            chan.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
+            chan.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
             manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             assert manager != null;
             manager.createNotificationChannel(chan);
 
-        }*/
+        }
 
         // Create notification default intent.
         Intent intent = new Intent();
@@ -106,14 +138,21 @@ public class LocationUpdateService extends Service {
         builder.setSmallIcon(R.mipmap.ic_launcher);
         Bitmap largeIconBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.battery);
         builder.setLargeIcon(largeIconBitmap);
+        builder.setOnlyAlertOnce(true);
         // Make the notification max priority.
-        builder.setPriority(Notification.PRIORITY_MAX);
+        builder.setPriority(Notification.PRIORITY_DEFAULT);
         // Make head-up notification.
-        builder.setFullScreenIntent(pendingIntent, true);
+        builder.setFullScreenIntent(pendingIntent, false);
 
         // Build the notification.
         notification = builder.build();
-
+        mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotifyBuilder = new NotificationCompat.Builder(LocationUpdateService.this,NOTIFICATION_CHANNEL_ID)
+                .setContentTitle("PedalEze")
+                .setContentText("You've received new messages.")
+                .setOnlyAlertOnce(true)
+                .setSmallIcon(R.drawable.ic_arrow);
+        numMessages = 0;
         // Start foreground service.
 
             startForeground(1, notification);
@@ -165,31 +204,12 @@ public class LocationUpdateService extends Service {
     }
 
     @Override
-    public void onCreate() {
-        super.onCreate();
-        final LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-        this.locationListener = new MyLocationListener();
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 2000, 0, this.locationListener);
-    }
-
-    @Override
     public void onDestroy() {
         super.onDestroy();
         stopForegroundService();
     }
 
     private class MyLocationListener implements LocationListener {
-
 
         @Override
         public void onLocationChanged(final Location location) {
@@ -245,17 +265,19 @@ public class LocationUpdateService extends Service {
 
 
                 //update Notification
-                NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                //mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
                 // Sets an ID for the notification, so it can be updated
-                int notifyID = 1;
-                NotificationCompat.Builder mNotifyBuilder = new NotificationCompat.Builder(LocationUpdateService.this,NOTIFICATION_CHANNEL_ID)
+                /*int notifyID = 1;
+                mNotifyBuilder = new NotificationCompat.Builder(LocationUpdateService.this,NOTIFICATION_CHANNEL_ID)
                         .setContentTitle("PedalEze")
                         .setContentText("You've received new messages.")
                         .setSmallIcon(R.drawable.ic_arrow);
-                numMessages = 0;
+                numMessages = 0;*/
                 // Start of a loop that processes data and then notifies the user...
+                int notifyID = 1;
                 mNotifyBuilder.setContentText(String.format("Distance: %.2f", dist[0] / 1000) + " km")
                         .setNumber(++numMessages);
+                mNotifyBuilder.setOnlyAlertOnce(true);
                 // Because the ID remains unchanged, the existing notification is
                 // updated.
                 mNotificationManager.notify(

@@ -5,7 +5,7 @@
     android:id="@+id/login_background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/login_bg"
+    android:background="@drawable/on_boarding_bg"
     tools:context=".LoginActivity">
 
     <LinearLayout
@@ -13,15 +13,14 @@
         android:layout_width="wrap_content"
         android:layout_height="127dp"
         android:layout_marginTop="8dp"
-        android:layout_marginRight="28dp"
+        android:layout_marginRight="36dp"
 
         android:layout_marginBottom="8dp"
         android:gravity="right"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/login_otp"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.546">
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:layout_width="match_parent"
@@ -50,18 +49,16 @@
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/login_main"
-        android:layout_width="match_parent"
-        android:layout_height="350dp"
+        android:layout_width="0dp"
+        android:layout_height="450sp"
 
-        android:layout_marginTop="8dp"
         android:background="@drawable/card_view"
         android:orientation="vertical"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/intro_text"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintStart_toStartOf="parent">
 
         <Button
             android:id="@+id/getBtn"
@@ -82,14 +79,14 @@
             app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/emailText"
-            app:layout_constraintVertical_bias="0.22" />
+            app:layout_constraintVertical_bias="0.716" />
 
         <LinearLayout
-            android:id="@+id/dest_layout"
+            android:id="@+id/phone_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="150dp"
             android:layout_marginRight="40dp"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
@@ -143,14 +140,14 @@
             android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/dest_layout" />
+            app:layout_constraintTop_toBottomOf="@+id/phone_layout" />
 
     </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/login_otp"
-        android:layout_width="match_parent"
-        android:layout_height="350dp"
+        android:layout_width="0dp"
+        android:layout_height="450sp"
         android:background="@drawable/card_view"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -184,14 +181,13 @@
             android:layout_width="237dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="76dp"
             android:layout_marginEnd="8dp"
             android:ems="10"
             android:hint="OTP Code"
             android:inputType="number"
             android:textColorLink="#0EE76A"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.504"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/otp1" />
 

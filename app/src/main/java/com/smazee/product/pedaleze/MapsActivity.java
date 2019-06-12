@@ -1,11 +1,9 @@
 package com.smazee.product.pedaleze;
 
 import android.Manifest;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -15,8 +13,6 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
-import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -29,7 +25,6 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -48,7 +43,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -86,8 +80,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mode_layout = findViewById(R.id.mode_layout);
         selection_layout = findViewById(R.id.selection_layout);
         allset_layout = findViewById(R.id.set_layout);
-        dest_layout = findViewById(R.id.dest_layout);
-        dist_layout.animate().translationY(600).alpha(0.0f);
+        dest_layout = findViewById(R.id.phone_layout);
+        dist_layout.animate().translationY(1000).alpha(0.0f);
         distTxt = findViewById(R.id.distText);
         destText = findViewById(R.id.destText);
         goBtn = findViewById(R.id.goBtn);
@@ -106,8 +100,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         dest_layout.setVisibility(View.INVISIBLE);
         assist_layout = findViewById(R.id.assist_layout);
         assist_layout.setVisibility(View.INVISIBLE);
-    }
 
+        dist_layout.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View view, MotionEvent event) {
+                // Your code here
+
+                return true;
+            }
+        });
+    }
 
     @Override
     protected void onResume() {
@@ -244,11 +247,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Log.d("MapActivity-->", "Please enable " + provider);
     }
 
-    public static void update(String []values) {
+    public static void updateBpm(String bpm) {
         //heart_rate.setText(values[0] + " bpm");
-        heart_txt.setText(values[0]);
-        goBtn.setText(values[1]+"\nKMPH");
-        dist_txt.setText(values[2]);
+        heart_txt.setText(bpm);
+    }
+
+    public static void update(String []values) {
+        goBtn.setText(values[0]+"\nKMPH");
+        dist_txt.setText(values[1]);
     }
 
     public void startTrack(View view) {
@@ -269,7 +275,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             goBtn.setText("START!");
             distTxt.setText("0.0 km");
             mMap.clear();
-            dist_layout.animate().translationY(600);
+            dist_layout.animate().translationY(1000);
             mode_layout.animate().translationY(0).alpha(1.0f);
             selection_layout.animate().translationY(0).alpha(1.0f);
             heart_rate.setVisibility(View.INVISIBLE);

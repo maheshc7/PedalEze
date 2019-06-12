@@ -42,6 +42,7 @@ public class PrefManager {
 
         return pref.getBoolean(IS_FIRST_TIME_LOGIN, true);
     }
+
     public void setPhoneNumber(String phoneNumber) {
         editor.putString(PHONE_NUMBER, phoneNumber);
         editor.commit();
@@ -49,5 +50,14 @@ public class PrefManager {
 
     public String getPhoneNumber() {
         return pref.getString(PHONE_NUMBER, "1236547890");
+    }
+
+    public void setName(String name) {
+        editor.putString("Name", name);
+        editor.commit();
+    }
+
+    public String getName() {
+        return pref.getString("Name", "PedalEze User");
     }
 }
